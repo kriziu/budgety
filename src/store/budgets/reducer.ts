@@ -27,6 +27,7 @@ export const budgetsReducer = (
     case Constants.CHANGE_TRANSACTIONS:
       newState = state.map(budget => {
         budget.amount.actual = budget.amount.starting;
+        budget.amount.diff = 0;
         action.payload.transactions.forEach(transaction => {
           if (transaction.budgetId === budget.id) {
             budget = {
@@ -42,6 +43,7 @@ export const budgetsReducer = (
             };
           }
         });
+
         return budget;
       });
       return newState;
