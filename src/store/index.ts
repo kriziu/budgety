@@ -4,7 +4,7 @@ import { combineReducers, createStore, compose } from 'redux';
 import { budgetsReducer } from './budgets/reducer';
 import { BudgetsState } from './budgets/types';
 import { googleUserReducer } from './googleUser/reducer';
-import { loadState, saveState } from './localstorage';
+import { saveState } from './localstorage';
 import { transactionReducer } from './transactions/reducer';
 import { TransactionState } from './transactions/types';
 
