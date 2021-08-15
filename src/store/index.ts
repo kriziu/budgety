@@ -22,7 +22,7 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const persistedState = loadState();
+//const persistedState = loadState();
 const store = createStore(
   combineReducers<RootState>({
     budgets: budgetsReducer,
