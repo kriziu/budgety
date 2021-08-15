@@ -32,6 +32,9 @@ export const transactionReducer = (
       });
       return newState;
 
+    case Constants.REMOVE_TRANSACTION_ALL:
+      return [];
+
     default:
       return state;
   }

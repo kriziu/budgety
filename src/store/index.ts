@@ -1,7 +1,9 @@
+import { GoogleLoginResponse } from 'react-google-login';
 import { combineReducers, createStore, compose } from 'redux';
 
 import { budgetsReducer } from './budgets/reducer';
 import { BudgetsState } from './budgets/types';
+import { googleUserReducer } from './googleUser/reducer';
 import { loadState, saveState } from './localstorage';
 import { transactionReducer } from './transactions/reducer';
 import { TransactionState } from './transactions/types';
@@ -9,6 +11,7 @@ import { TransactionState } from './transactions/types';
 export interface RootState {
   budgets: BudgetsState;
   transactions: TransactionState;
+  googleUser: GoogleLoginResponse['profileObj'] | null;
 }
 
 declare global {
@@ -24,8 +27,8 @@ const store = createStore(
   combineReducers<RootState>({
     budgets: budgetsReducer,
     transactions: transactionReducer,
+    googleUser: googleUserReducer,
   }),
-  persistedState,
   composeEnhancers()
 );
 

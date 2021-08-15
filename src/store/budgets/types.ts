@@ -2,7 +2,8 @@ import { ActionType } from 'typesafe-actions';
 import * as actions from './actions';
 
 export interface BudgetType {
-  id: number;
+  id: string;
+  userId: string | null;
   title: string;
   amount: {
     actual: number;

@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { Top, Header, IconSpan, ButtonsContainer } from './Elements';
 import { BiEdit, BiX } from 'react-icons/bi';
@@ -15,10 +16,13 @@ import {
 import { handleEnterPressed } from '../../../../utils/utility';
 import { removeTransactionsByBudgetIdAction } from '../../../../store/transactions/actions';
 import Form from '../../../../components/Form';
+import { RootState } from '../../../../store';
+import { dbUrl } from '../../../../constant/routes';
 
 const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
   const dispatch = useDispatch();
   const context = useContext(ModalContext);
+  const googleUser = useSelector((state: RootState) => state.googleUser);
 
   const handleClose = (): void => context.handleClose();
 
@@ -26,12 +30,15 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
     context.handleClose();
     dispatch(removeBudgetAction(id));
 
+    axios.delete(`${dbUrl}/budgets/${id}`);
+
     dispatch(removeTransactionsByBudgetIdAction(id));
   };
 
   const handleSubmitForm = (newTitle: string, newAmount: number): void => {
     const newBudget: BudgetType = {
       id,
+      userId: googleUser?.googleId ? googleUser?.googleId : null,
       title: newTitle,
       amount: {
         actual: newAmount,
@@ -43,6 +50,10 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
 
     dispatch(editBudgetAction(newBudget));
     dispatch(changeTransactions());
+
+    axios.patch(`${dbUrl}/budgets/${id}`, {
+      ...newBudget,
+    });
 
     context.handleClose();
   };

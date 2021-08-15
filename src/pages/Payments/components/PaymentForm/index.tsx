@@ -1,35 +1,41 @@
-import { FC } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 import { RootState } from '../../../../store';
 import { addTransactionAction } from '../../../../store/transactions/actions';
-import { getUniqueId } from '../../../../utils/utility';
 import { TransactionType } from '../../../../store/transactions/types';
 import Form from '../../../../components/Form';
 import { changeTransactions } from '../../../../store/budgets/actions';
 import { Select, Container } from './Elements';
 import { Label } from '../../../../components/Form/Elements';
 import BudgetInfo from '../../../../components/BudgetInfo';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { Button } from '../../../../components/Button';
+import { dbUrl } from '../../../../constant/routes';
 
 const PaymentForm: FC = () => {
   const dispatch = useDispatch();
-  const transactions = useSelector((state: RootState) => state.transactions);
   const budgets = useSelector((state: RootState) => state.budgets);
-  const [selectedBudgetId, setSelectedBudgetId] = useState(0);
+  const googleUser = useSelector((state: RootState) => state.googleUser);
+  const [selectedBudgetId, setSelectedBudgetId] = useState('');
+  let budgetsLength = useRef(-1);
 
   useEffect(() => {
-    budgets[0] && setSelectedBudgetId(budgets[0].id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (budgetsLength.current !== budgets.length)
+      budgets[0] && setSelectedBudgetId(budgets[0].id);
+
+    return () => {
+      budgetsLength.current = budgets.length;
+    };
+  }, [budgets]);
 
   const handleSubmit = (title: string, amount: number): void => {
     const newTransaction: TransactionType = {
-      id: getUniqueId(transactions),
+      id: uuidv4(),
       budgetId: selectedBudgetId,
+      userId: googleUser?.googleId ? googleUser.googleId : null,
       title,
       amount,
       date: new Date(),
@@ -37,6 +43,10 @@ const PaymentForm: FC = () => {
 
     dispatch(addTransactionAction(newTransaction));
     dispatch(changeTransactions());
+
+    axios.post(`${dbUrl}/transactions`, {
+      ...newTransaction,
+    });
   };
 
   const renderOptions = (): JSX.Element[] => {
@@ -52,7 +62,7 @@ const PaymentForm: FC = () => {
   const handleSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    setSelectedBudgetId(parseInt(e.target.value));
+    setSelectedBudgetId(e.target.value);
   };
 
   return (
@@ -68,9 +78,11 @@ const PaymentForm: FC = () => {
         </Select>
         {budgets[0] && (
           <Container>
-            <BudgetInfo
-              {...budgets.filter(budget => budget.id === selectedBudgetId)[0]}
-            />
+            {selectedBudgetId && (
+              <BudgetInfo
+                {...budgets.filter(budget => budget.id === selectedBudgetId)[0]}
+              />
+            )}
           </Container>
         )}
         <Button

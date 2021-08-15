@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { FC } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { RootState } from '../../../../store';
 import { changeTransactions } from '../../../../store/budgets/actions';
 import { removeTransactionAction } from '../../../../store/transactions/actions';
 import { TransactionType } from '../../../../store/transactions/types';
 import { getMoneyColor } from '../../../../utils/ux';
+import Modal from '../../../../components/Modal';
+import ModalConfirm from '../../../../components/ModalConfirm';
 import {
   CloseIcon,
   Container,
@@ -17,6 +21,7 @@ import {
   SmallTitle,
   Title,
 } from './Elements';
+import { dbUrl } from '../../../../constant/routes';
 
 const Transaction: FC<TransactionType> = ({
   id,
@@ -26,6 +31,7 @@ const Transaction: FC<TransactionType> = ({
   date,
 }): JSX.Element => {
   const dispatch = useDispatch();
+  const [modalOpened, setModalOpened] = useState(false);
 
   const budget = useSelector((state: RootState) =>
     state.budgets.filter(budget => budget.id === budgetId)
@@ -33,28 +39,41 @@ const Transaction: FC<TransactionType> = ({
 
   const dateN = new Date(date);
 
-  const handleDeleteButton = (): void => {
+  const handleDeleteTransaction = (): void => {
     dispatch(removeTransactionAction(id));
     dispatch(changeTransactions());
+
+    axios.delete(`${dbUrl}/transactions/${id}`);
   };
 
   return (
-    <Container>
-      <div style={{ flex: 1 }}>
-        <Title>{title}</Title>
-        <SmallTitle>{budget.title}</SmallTitle>
-        <DateHeader>
-          {dateN.getFancyDate()} | {dateN.getFancyHours()}
-        </DateHeader>
-      </div>
-      <Money color={getMoneyColor(amount)}>{amount}$</Money>
-      <div>
-        <DeleteBtn color="red" textColor="white" onClick={handleDeleteButton}>
-          <CloseIcon />
-          <DeleteText>Delete</DeleteText>
-        </DeleteBtn>
-      </div>
-    </Container>
+    <>
+      <Container>
+        <div style={{ flex: 1 }}>
+          <Title>{title}</Title>
+          <SmallTitle>{budget.title}</SmallTitle>
+          <DateHeader>
+            {dateN.getFancyDate()} | {dateN.getFancyHours()}
+          </DateHeader>
+        </div>
+        <Money color={getMoneyColor(amount)}>{amount}$</Money>
+        <div>
+          <DeleteBtn
+            color="red"
+            textColor="white"
+            onClick={() => setModalOpened(true)}
+          >
+            <CloseIcon />
+            <DeleteText>Delete</DeleteText>
+          </DeleteBtn>
+        </div>
+      </Container>
+      {modalOpened && (
+        <Modal closeModal={() => setModalOpened(false)}>
+          <ModalConfirm handleAction={handleDeleteTransaction} />
+        </Modal>
+      )}
+    </>
   );
 };
 

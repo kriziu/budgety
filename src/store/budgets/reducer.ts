@@ -48,6 +48,9 @@ export const budgetsReducer = (
       });
       return newState;
 
+    case Constants.REMOVE_BUDGET_ALL:
+      return [];
+
     default:
       return state;
   }

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { breakpoints } from '../../constant/style/breakpoints';
+import { Button } from '../Button';
 
 interface NavProps {
   opened?: boolean;
@@ -18,11 +19,20 @@ export const Navigation = styled.nav`
   position: relative;
 `;
 
-export const Header = styled.h1`
-  font-weight: 400;
-  font-size: 3.2rem;
-  padding: 0;
-  margin: 0;
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+
+  h1 {
+    font-weight: 400;
+    font-size: 3rem;
+    margin-right: 2rem;
+    display: none;
+
+    @media (min-width: ${breakpoints.tablet}) {
+      display: block;
+    }
+  }
 `;
 
 export const ToggleNavButton = styled.button`
@@ -171,6 +181,31 @@ export const StyledLink = styled(Link)`
 
   @media (min-width: ${breakpoints.tablet}) {
     color: #222;
+    font-size: 1.6rem;
+  }
+
+  @media (min-width: ${breakpoints.desktop}) {
     font-size: 2rem;
+  }
+`;
+
+type url = { url: string };
+
+export const Avatar = styled.div<url>`
+  border-radius: 50%;
+  background-image: ${props => `url('${props.url}')`};
+  background-size: cover;
+  padding: 2rem;
+  margin-right: 1.5rem;
+`;
+
+export const GoogleButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.9rem;
+
+  svg {
+    margin-right: 0.5rem;
   }
 `;

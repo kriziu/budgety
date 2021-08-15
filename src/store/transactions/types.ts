@@ -2,8 +2,9 @@ import { ActionType } from 'typesafe-actions';
 import * as actions from './actions';
 
 export interface TransactionType {
-  id: number;
-  budgetId: number;
+  id: string;
+  budgetId: string;
+  userId: string | null;
   title: string;
   amount: number;
   date: Date;

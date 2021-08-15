@@ -1,5 +1,12 @@
 import React, { FC, useState, useRef } from 'react';
 
+import GoogleLogin, {
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+  GoogleLogout,
+} from 'react-google-login';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   Navigation,
   Header,
@@ -8,13 +15,22 @@ import {
   MobileLinksContainer,
   StyledLink,
   DesktopLinksContainer,
+  Avatar,
+  GoogleButton,
 } from './Elements';
+import { FaGoogle } from 'react-icons/fa';
 import { routes } from '../../constant/routes';
+import { loginAction, logoutAction } from '../../store/googleUser/actions';
+import { RootState } from '../../store';
+import { removeAllBudgetsAction } from '../../store/budgets/actions';
+import { removeAllTransactionsAction } from '../../store/transactions/actions';
 
 const NavBar: FC = (): JSX.Element => {
   const [opened, setOpened] = useState(false);
   const [btnFocused, setBtnFocued] = useState(false);
   const btnRef = useRef(null);
+  const dispatch = useDispatch();
+  const googleUser = useSelector((state: RootState) => state.googleUser);
 
   const toggleNavMenu = (e: React.MouseEvent) => {
     setOpened(!opened);
@@ -38,9 +54,70 @@ const NavBar: FC = (): JSX.Element => {
     ));
   };
 
+  const handleResponseGoogle = (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    if ((response as GoogleLoginResponse).profileObj) {
+      dispatch(loginAction((response as GoogleLoginResponse).profileObj));
+    }
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutAction());
+
+    dispatch(removeAllTransactionsAction());
+
+    setTimeout(() => {
+      dispatch(removeAllBudgetsAction());
+    }, 200);
+  };
+
   return (
     <Navigation>
-      <Header>Budgety</Header>
+      <Header>
+        <h1 style={{ marginRight: '1rem' }}>Budgety</h1>
+        {googleUser === null ? (
+          <GoogleLogin
+            clientId="118372615416-cjlib17tonjdhn4tqtpnetm7mif08ah9.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={handleResponseGoogle}
+            onFailure={handleResponseGoogle}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn
+            render={renderProps => (
+              <GoogleButton
+                color="red"
+                textColor="white"
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                <FaGoogle />
+                Login
+              </GoogleButton>
+            )}
+          />
+        ) : (
+          <>
+            <Avatar url={googleUser.imageUrl} />
+            <GoogleLogout
+              clientId="118372615416-cjlib17tonjdhn4tqtpnetm7mif08ah9.apps.googleusercontent.com"
+              buttonText="Logout"
+              onLogoutSuccess={handleLogout}
+              render={renderProps => (
+                <GoogleButton
+                  color="red"
+                  textColor="white"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <FaGoogle />
+                  Logout
+                </GoogleButton>
+              )}
+            />
+          </>
+        )}
+      </Header>
       <ToggleNavButton
         aria-label="Navigation button"
         onClick={toggleNavMenu}

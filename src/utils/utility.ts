@@ -30,13 +30,6 @@ Date.prototype.getFancyHours = function (): string {
   return `${hours}:${minutes}`;
 };
 
-type HasId = { id: number };
-
-export const getUniqueId = <T extends HasId>(array: T[]): number => {
-  if (!array.length) return 0;
-  return array[array.length - 1].id + 1;
-};
-
 export const handleEnterPressed = (
   e: React.KeyboardEvent,
   action: () => void

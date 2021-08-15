@@ -8,7 +8,7 @@ export const addBudgetAction = (budget: BudgetType) => {
   return action(Constants.ADD_BUDGET, { budget });
 };
 
-export const removeBudgetAction = (budgetId: number) => {
+export const removeBudgetAction = (budgetId: string) => {
   return action(Constants.REMOVE_BUDGET, { budgetId });
 };
 
@@ -19,4 +19,8 @@ export const editBudgetAction = (budget: BudgetType) => {
 export const changeTransactions = () => {
   const transactions: TransactionType[] = store.getState().transactions;
   return action(Constants.CHANGE_TRANSACTIONS, { transactions });
+};
+
+export const removeAllBudgetsAction = () => {
+  return action(Constants.REMOVE_BUDGET_ALL);
 };
