@@ -57,6 +57,8 @@ const NavBar: FC = (): JSX.Element => {
   const handleResponseGoogle = (
     response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
+    console.log(response);
+
     if ((response as GoogleLoginResponse).profileObj) {
       dispatch(loginAction((response as GoogleLoginResponse).profileObj));
     }
@@ -78,7 +80,7 @@ const NavBar: FC = (): JSX.Element => {
         <h1 style={{ marginRight: '1rem' }}>Budgety</h1>
         {googleUser === null ? (
           <GoogleLogin
-            clientId="118372615416-cjlib17tonjdhn4tqtpnetm7mif08ah9.apps.googleusercontent.com"
+            clientId="118372615416-g77a8gaf92slnb4f50jr6o9cmh0f4ho1.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={handleResponseGoogle}
             onFailure={handleResponseGoogle}
