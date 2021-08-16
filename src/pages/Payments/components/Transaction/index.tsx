@@ -36,6 +36,7 @@ const Transaction: FC<TransactionType> = ({
   const budget = useSelector((state: RootState) =>
     state.budgets.filter(budget => budget.id === budgetId)
   )[0];
+  const googleUser = useSelector((state: RootState) => state.googleUser);
 
   const dateN = new Date(date);
 
@@ -43,7 +44,7 @@ const Transaction: FC<TransactionType> = ({
     dispatch(removeTransactionAction(id));
     dispatch(changeTransactions());
 
-    axios.delete(`${dbUrl}/transactions/${id}`);
+    if (googleUser) axios.delete(`${dbUrl}/transactions/${id}`);
   };
 
   return (

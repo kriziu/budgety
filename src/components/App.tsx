@@ -11,11 +11,19 @@ import AnimatedRouter from './AnimatedRouter';
 import { useEffect } from 'react';
 import { BudgetType } from '../store/budgets/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBudgetAction, changeTransactions } from '../store/budgets/actions';
+import {
+  addBudgetAction,
+  changeTransactions,
+  removeAllBudgetsAction,
+} from '../store/budgets/actions';
 import { RootState } from '../store';
 import { TransactionType } from '../store/transactions/types';
-import { addTransactionAction } from '../store/transactions/actions';
+import {
+  addTransactionAction,
+  removeAllTransactionsAction,
+} from '../store/transactions/actions';
 import { dbUrl } from '../constant/routes';
+import { timeout } from '../utils/utility';
 
 const Container = styled.div`
   width: 100vw;
@@ -33,6 +41,10 @@ const App: FC = (): JSX.Element => {
 
   useEffect(() => {
     const fetchData = async () => {
+      dispatch(removeAllTransactionsAction());
+      setTimeout(() => dispatch(removeAllBudgetsAction()), 250);
+      await timeout(250);
+
       const budgets: BudgetType[] = await (
         await axios.get(`${dbUrl}/budgets`, {
           params: {
@@ -63,6 +75,11 @@ const App: FC = (): JSX.Element => {
 
       dispatch(changeTransactions());
     };
+
+    if (!googleUser) {
+      dispatch(removeAllTransactionsAction());
+      setTimeout(() => dispatch(removeAllBudgetsAction()), 250);
+    }
 
     if (googleUser) fetchData();
   }, [googleUser, dispatch]);

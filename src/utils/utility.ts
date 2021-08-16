@@ -36,3 +36,7 @@ export const handleEnterPressed = (
 ): void => {
   if (e.key === 'Enter') action();
 };
+
+export const timeout = (ms: number) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};

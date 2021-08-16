@@ -51,9 +51,10 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
     dispatch(editBudgetAction(newBudget));
     dispatch(changeTransactions());
 
-    axios.patch(`${dbUrl}/budgets/${id}`, {
-      ...newBudget,
-    });
+    if (googleUser)
+      axios.patch(`${dbUrl}/budgets/${id}`, {
+        ...newBudget,
+      });
 
     context.handleClose();
   };

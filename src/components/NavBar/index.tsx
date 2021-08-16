@@ -22,8 +22,10 @@ import { FaGoogle } from 'react-icons/fa';
 import { routes } from '../../constant/routes';
 import { loginAction, logoutAction } from '../../store/googleUser/actions';
 import { RootState } from '../../store';
-import { removeAllBudgetsAction } from '../../store/budgets/actions';
-import { removeAllTransactionsAction } from '../../store/transactions/actions';
+import { loadState } from '../../store/localstorage';
+import { addBudgetAction } from '../../store/budgets/actions';
+import { timeout } from '../../utils/utility';
+import { addTransactionAction } from '../../store/transactions/actions';
 
 const NavBar: FC = (): JSX.Element => {
   const [opened, setOpened] = useState(false);
@@ -64,14 +66,16 @@ const NavBar: FC = (): JSX.Element => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const state = loadState();
     dispatch(logoutAction());
-
-    dispatch(removeAllTransactionsAction());
-
-    setTimeout(() => {
-      dispatch(removeAllBudgetsAction());
-    }, 200);
+    if (state) {
+      await timeout(500);
+      state.budgets.forEach(budget => dispatch(addBudgetAction(budget)));
+      state.transactions.forEach(transaction =>
+        dispatch(addTransactionAction(transaction))
+      );
+    }
   };
 
   return (

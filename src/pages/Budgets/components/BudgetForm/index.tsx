@@ -25,11 +25,10 @@ const BudgetForm: FC = () => {
 
     dispatch(addBudgetAction(newBudget));
 
-    if (googleUser?.googleId) {
+    if (googleUser)
       axios.post(`${dbUrl}/budgets`, {
         ...newBudget,
       });
-    }
   };
 
   return <Form handleSubmit={handleSubmit} />;

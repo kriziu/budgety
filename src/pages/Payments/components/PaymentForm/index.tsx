@@ -23,9 +23,10 @@ const PaymentForm: FC = () => {
   let budgetsLength = useRef(-1);
 
   useEffect(() => {
-    if (budgetsLength.current !== budgets.length)
-      budgets[0] && setSelectedBudgetId(budgets[0].id);
-
+    if (budgetsLength.current !== budgets.length) {
+      if (budgets[0]) setSelectedBudgetId(budgets[0].id);
+      else setSelectedBudgetId('');
+    }
     return () => {
       budgetsLength.current = budgets.length;
     };
@@ -44,9 +45,10 @@ const PaymentForm: FC = () => {
     dispatch(addTransactionAction(newTransaction));
     dispatch(changeTransactions());
 
-    axios.post(`${dbUrl}/transactions`, {
-      ...newTransaction,
-    });
+    if (googleUser)
+      axios.post(`${dbUrl}/transactions`, {
+        ...newTransaction,
+      });
   };
 
   const renderOptions = (): JSX.Element[] => {
