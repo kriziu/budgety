@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CurrencyType } from '../store/currency/types';
 
-export const currencylayerAPI = async (
+export const currencyExchangeAPI = async (
   currencyFromState: CurrencyType
 ): Promise<CurrencyType> => {
   const date = new Date();
@@ -13,38 +13,33 @@ export const currencylayerAPI = async (
   );
 
   if (daysBetweenDates >= 7) {
-    interface quote {
+    interface rate {
       [key: string]: number;
     }
 
     interface dataFetchedType {
-      privacy: string;
-      quotes: quote;
+      rates: rate;
       source: string;
-      succes: boolean;
-      terms: string;
+      date: string;
       timestamp: number;
     }
 
     const currencies: dataFetchedType = await (
-      await axios.get('http://apilayer.net/api/live', {
-        params: {
-          access_key: 'd2818773d17dd6701d7f0b21476325f0',
-        },
-      })
+      await axios.get(
+        'https://v1.nocodeapi.com/kriziuu/cx/FPLWrEBmjQDFHLdf/rates'
+      )
     ).data;
 
-    let quotes: quote = {};
-    for (const [key, value] of Object.entries(currencies.quotes)) {
-      const quote: quote = { [key.replace('USD', '')]: value };
-      quotes = { ...quotes, ...quote };
+    let rates: rate = {};
+    for (const [key, value] of Object.entries(currencies.rates)) {
+      const rate: rate = { [key]: value };
+      rates = { ...rates, ...rate };
     }
 
-    console.log(quotes);
     const currency: CurrencyType = {
       dateFetched: date,
       source: currencies.source,
-      currencies: quotes,
+      currencies: rates,
       primaryCurrency: currencyFromState.primaryCurrency,
     };
 

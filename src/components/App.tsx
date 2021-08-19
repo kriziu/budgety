@@ -20,7 +20,7 @@ import {
 } from '../store/transactions/actions';
 import { updateCurrency } from '../store/currency/actions';
 import { useRef } from 'react';
-import { currencylayerAPI } from '../api/currencylayer';
+import { currencyExchangeAPI } from '../api/currencyExchange';
 import { dbAPI } from '../api/db';
 
 const Container = styled.div`
@@ -67,7 +67,7 @@ const App: FC = (): JSX.Element => {
 
   // CURRENCY
   useEffect(() => {
-    currencylayerAPI(currencyFromState).then(currency => {
+    currencyExchangeAPI(currencyFromState).then(currency => {
       dispatch(updateCurrency(currency));
     });
   }, [currencyFromState, dispatch]);
