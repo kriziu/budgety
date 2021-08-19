@@ -27,7 +27,7 @@ export const currencylayerAPI = async (
     }
 
     const currencies: dataFetchedType = await (
-      await axios.get('http://apilayer.net/api/live', {
+      await axios.get('https://apilayer.net/api/live', {
         params: {
           access_key: 'd2818773d17dd6701d7f0b21476325f0',
         },
