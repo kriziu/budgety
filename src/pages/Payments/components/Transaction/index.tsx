@@ -29,6 +29,7 @@ const Transaction: FC<TransactionType> = ({
   title,
   amount,
   date,
+  currency,
 }): JSX.Element => {
   const dispatch = useDispatch();
   const [modalOpened, setModalOpened] = useState(false);
@@ -57,7 +58,9 @@ const Transaction: FC<TransactionType> = ({
             {dateN.getFancyDate()} | {dateN.getFancyHours()}
           </DateHeader>
         </div>
-        <Money color={getMoneyColor(amount)}>{amount}$</Money>
+        <Money color={getMoneyColor(amount)}>
+          {amount} {currency}
+        </Money>
         <div>
           <DeleteBtn
             color="red"

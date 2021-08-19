@@ -32,11 +32,16 @@ const PaymentForm: FC = () => {
     };
   }, [budgets]);
 
-  const handleSubmit = (title: string, amount: number): void => {
+  const handleSubmit = (
+    title: string,
+    amount: number,
+    currency: string
+  ): void => {
     const newTransaction: TransactionType = {
       id: uuidv4(),
+      currency,
       budgetId: selectedBudgetId,
-      userId: googleUser?.googleId ? googleUser.googleId : null,
+      userId: googleUser ? googleUser.googleId : null,
       title,
       amount,
       date: new Date(),
@@ -55,7 +60,8 @@ const PaymentForm: FC = () => {
     return budgets.map(budget => {
       return (
         <option key={budget.id} value={budget.id}>
-          {budget.title}: {budget.amount.actual.toFixed(2)}$
+          {budget.title}: {budget.amount.actual.toFixed(2)}{' '}
+          {budget.amount.currency}
         </option>
       );
     });
@@ -67,24 +73,33 @@ const PaymentForm: FC = () => {
     setSelectedBudgetId(e.target.value);
   };
 
+  const selectedBudget = budgets.filter(
+    budget => budget.id === selectedBudgetId
+  )[0];
+
   return (
-    <Form handleSubmit={handleSubmit} disabled={!budgets.length} button={false}>
+    <Form
+      handleSubmit={handleSubmit}
+      disabled={!budgets.length}
+      button={false}
+      currency={selectedBudget && selectedBudget.amount.currency}
+      childrenBefore={
+        <>
+          <Label htmlFor="selectBudget">Select a budget</Label>
+          <Select
+            id="selectBudget"
+            onChange={handleSelectChange}
+            value={selectedBudgetId}
+          >
+            {renderOptions()}
+          </Select>
+        </>
+      }
+    >
       <>
-        <Label htmlFor="selectBudget">Select a budget</Label>
-        <Select
-          id="selectBudget"
-          onChange={handleSelectChange}
-          value={selectedBudgetId}
-        >
-          {renderOptions()}
-        </Select>
         {budgets[0] && (
           <Container>
-            {selectedBudgetId && (
-              <BudgetInfo
-                {...budgets.filter(budget => budget.id === selectedBudgetId)[0]}
-              />
-            )}
+            {selectedBudgetId && <BudgetInfo {...selectedBudget} />}
           </Container>
         )}
         <Button

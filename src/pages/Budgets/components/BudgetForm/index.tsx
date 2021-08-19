@@ -14,12 +14,16 @@ const BudgetForm: FC = () => {
   const dispatch = useDispatch();
   const googleUser = useSelector((state: RootState) => state.googleUser);
 
-  const handleSubmit = (title: string, amount: number): void => {
+  const handleSubmit = (
+    title: string,
+    amount: number,
+    currency: string
+  ): void => {
     const newBudget: BudgetType = {
       id: uuidv4(),
       userId: googleUser?.googleId ? googleUser?.googleId : null,
       title: title,
-      amount: { actual: amount, diff: 0, starting: amount },
+      amount: { actual: amount, currency, diff: 0, starting: amount },
       date: new Date(),
     };
 

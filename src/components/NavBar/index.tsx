@@ -59,8 +59,6 @@ const NavBar: FC = (): JSX.Element => {
   const handleResponseGoogle = (
     response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    console.log(response);
-
     if ((response as GoogleLoginResponse).profileObj) {
       dispatch(loginAction((response as GoogleLoginResponse).profileObj));
     }
@@ -69,6 +67,7 @@ const NavBar: FC = (): JSX.Element => {
   const handleLogout = async () => {
     const state = loadState();
     dispatch(logoutAction());
+
     if (state) {
       await timeout(500);
       state.budgets.forEach(budget => dispatch(addBudgetAction(budget)));

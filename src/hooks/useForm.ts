@@ -45,8 +45,6 @@ const useForm = (initialState: {
         checked: bool,
       },
     });
-
-    console.log(formData);
   };
   return [formData, setFormData, toggleChecked, handleInputChange];
 };

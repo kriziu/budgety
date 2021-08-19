@@ -28,17 +28,20 @@ export const budgetsReducer = (
       newState = state.map(budget => {
         budget.amount.actual = budget.amount.starting;
         budget.amount.diff = 0;
+        const currency = action.payload.currency;
+
         action.payload.transactions.forEach(transaction => {
+          let money =
+            (transaction.amount / currency.currencies[transaction.currency]) *
+            currency.currencies[budget.amount.currency];
+
           if (transaction.budgetId === budget.id) {
             budget = {
               ...budget,
               amount: {
                 ...budget.amount,
-                actual: budget.amount.actual + transaction.amount,
-                diff:
-                  budget.amount.actual +
-                  transaction.amount -
-                  budget.amount.starting,
+                actual: budget.amount.actual + money,
+                diff: budget.amount.actual + money - budget.amount.starting,
               },
             };
           }

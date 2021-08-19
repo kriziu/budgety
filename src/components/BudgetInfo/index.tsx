@@ -19,10 +19,12 @@ const BudgetInfo: FC<BudgetType> = (budget): JSX.Element => {
       <TitleHeader>{title}</TitleHeader>
       <div>
         <MoneyHeader color={getMoneyColor(amount.actual)}>
-          {amount.actual.toFixed(2)} $
+          {amount.actual.toFixed(2)} {amount.currency}
         </MoneyHeader>
         <DiffSpan color={getMoneyColor(amount.diff)}>
-          <SmallMoneyHeader>{amount.diff.toFixed(2)} $</SmallMoneyHeader>
+          <SmallMoneyHeader>
+            {amount.diff.toFixed(2)} {amount.currency}
+          </SmallMoneyHeader>
           <DiffIcon amount={amount.diff}>
             {amount.diff > 0 ? (
               <BiCaretUp />

@@ -3,6 +3,7 @@ import store from '..';
 import { BudgetType } from './types';
 import { TransactionType } from '../transactions/types';
 import { Constants } from './constants';
+import { CurrencyType } from '../currency/types';
 
 export const addBudgetAction = (budget: BudgetType) => {
   return action(Constants.ADD_BUDGET, { budget });
@@ -18,7 +19,8 @@ export const editBudgetAction = (budget: BudgetType) => {
 
 export const changeTransactions = () => {
   const transactions: TransactionType[] = store.getState().transactions;
-  return action(Constants.CHANGE_TRANSACTIONS, { transactions });
+  const currency: CurrencyType = store.getState().currency;
+  return action(Constants.CHANGE_TRANSACTIONS, { transactions, currency });
 };
 
 export const removeAllBudgetsAction = () => {

@@ -4,6 +4,7 @@ import * as actions from './actions';
 export interface TransactionType {
   id: string;
   budgetId: string;
+  currency: string;
   userId: string | null;
   title: string;
   amount: number;

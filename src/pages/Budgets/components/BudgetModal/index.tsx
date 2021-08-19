@@ -30,18 +30,23 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
     context.handleClose();
     dispatch(removeBudgetAction(id));
 
-    axios.delete(`${dbUrl}/budgets/${id}`);
+    if (googleUser) axios.delete(`${dbUrl}/budgets/${id}`);
 
     dispatch(removeTransactionsByBudgetIdAction(id));
   };
 
-  const handleSubmitForm = (newTitle: string, newAmount: number): void => {
+  const handleSubmitForm = (
+    newTitle: string,
+    newAmount: number,
+    newCurrency: string
+  ): void => {
     const newBudget: BudgetType = {
       id,
       userId: googleUser?.googleId ? googleUser?.googleId : null,
       title: newTitle,
       amount: {
         actual: newAmount,
+        currency: newCurrency,
         diff: 0,
         starting: newAmount,
       },
@@ -84,6 +89,7 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
             amount: { value: amount.starting.toFixed(2), required: true },
           }}
           style={{ padding: 0 }}
+          currency={amount.currency}
         >
           <ButtonsContainer>
             <Button

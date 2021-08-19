@@ -7,6 +7,7 @@ export interface BudgetType {
   title: string;
   amount: {
     actual: number;
+    currency: string;
     diff: number;
     starting: number;
   };

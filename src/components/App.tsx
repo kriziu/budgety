@@ -1,15 +1,12 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import GlobalStyle from './GlobalStyles';
 import NavBar from './NavBar';
 import { breakpoints } from '../constant/style/breakpoints';
 import AnimatedRouter from './AnimatedRouter';
-import { useEffect } from 'react';
-import { BudgetType } from '../store/budgets/types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addBudgetAction,
@@ -17,13 +14,14 @@ import {
   removeAllBudgetsAction,
 } from '../store/budgets/actions';
 import { RootState } from '../store';
-import { TransactionType } from '../store/transactions/types';
 import {
   addTransactionAction,
   removeAllTransactionsAction,
 } from '../store/transactions/actions';
-import { dbUrl } from '../constant/routes';
-import { timeout } from '../utils/utility';
+import { updateCurrency } from '../store/currency/actions';
+import { useRef } from 'react';
+import { currencylayerAPI } from '../api/currencylayer';
+import { dbAPI } from '../api/db';
 
 const Container = styled.div`
   width: 100vw;
@@ -38,51 +36,41 @@ const Container = styled.div`
 const App: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const googleUser = useSelector((state: RootState) => state.googleUser);
+  const currencyFromState = useSelector((state: RootState) => state.currency);
+  const firstRender = useRef(true);
 
+  // DATABASE
   useEffect(() => {
-    const fetchData = async () => {
+    if (!firstRender.current) {
       dispatch(removeAllTransactionsAction());
       setTimeout(() => dispatch(removeAllBudgetsAction()), 250);
-      await timeout(250);
-
-      const budgets: BudgetType[] = await (
-        await axios.get(`${dbUrl}/budgets`, {
-          params: {
-            userId: googleUser?.googleId,
-          },
-        })
-      ).data;
-
-      const transactions: TransactionType[] = await (
-        await axios.get(`${dbUrl}/transactions`, {
-          params: {
-            userId: googleUser?.googleId,
-          },
-        })
-      ).data;
-
-      console.log(budgets);
-      console.log(transactions);
-      budgets.forEach(budget => {
-        budget.date = new Date(budget.date);
-        dispatch(addBudgetAction(budget));
-      });
-
-      transactions.forEach(transaction => {
-        transaction.date = new Date(transaction.date);
-        dispatch(addTransactionAction(transaction));
-      });
-
       dispatch(changeTransactions());
-    };
-
-    if (!googleUser) {
-      dispatch(removeAllTransactionsAction());
-      setTimeout(() => dispatch(removeAllBudgetsAction()), 250);
     }
 
-    if (googleUser) fetchData();
+    if (googleUser) {
+      dbAPI(googleUser).then(response => {
+        response.budgets.forEach(budget => {
+          dispatch(addBudgetAction(budget));
+        });
+        response.transactions.forEach(transaction => {
+          dispatch(addTransactionAction(transaction));
+        });
+
+        dispatch(changeTransactions());
+      });
+    }
+
+    return () => {
+      firstRender.current = false;
+    };
   }, [googleUser, dispatch]);
+
+  // CURRENCY
+  useEffect(() => {
+    currencylayerAPI(currencyFromState).then(currency => {
+      dispatch(updateCurrency(currency));
+    });
+  }, [currencyFromState, dispatch]);
 
   return (
     <>
