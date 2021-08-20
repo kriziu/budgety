@@ -1,0 +1,35 @@
+GET http://localhost:9000/.netlify/functions/api/transactions
+
+###
+
+GET http://localhost:9000/.netlify/functions/api/transactions/1
+
+###
+
+GET http://localhost:9000/.netlify/functions/api/transactions?userId=2
+
+###
+
+POST http://localhost:9000/.netlify/functions/api/transactions
+Content-Type: application/json
+
+{
+  "userId": "1",
+  "budgetId": "611f96baec8620547825f021",
+  "title": "transaction 2",
+  "amount": 50,
+  "currency": "PLN"
+}
+
+###
+
+PATCH http://localhost:9000/.netlify/functions/api/budgets/611f96baec8620547825f021
+Content-Type: application/json
+
+{
+  "title": "test 5"
+}
+
+###
+
+DELETE http://localhost:9000/.netlify/functions/api/transactions/611ff488aaee5827c8766845
