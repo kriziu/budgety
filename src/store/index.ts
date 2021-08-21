@@ -39,7 +39,7 @@ const store = createStore(
 
 store.subscribe((): void => {
   const state = store.getState();
-  const persState = loadState() as RootState;
+  // const persState = loadState() as RootState;
 
   const budgets = state.budgets.filter(budget => budget.userId === null);
   const transactions = state.transactions.filter(
