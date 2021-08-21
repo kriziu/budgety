@@ -19,7 +19,7 @@ import Form from '../../../../components/Form';
 import { RootState } from '../../../../store';
 import { dbUrl } from '../../../../constant/routes';
 
-const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
+const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
   const dispatch = useDispatch();
   const context = useContext(ModalContext);
   const googleUser = useSelector((state: RootState) => state.googleUser);
@@ -28,11 +28,11 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
 
   const handleDelete = (): void => {
     context.handleClose();
-    dispatch(removeBudgetAction(id));
+    dispatch(removeBudgetAction(_id));
 
-    if (googleUser) axios.delete(`${dbUrl}/budgets/${id}`);
+    if (googleUser) axios.delete(`${dbUrl}/budgets/${_id}`);
 
-    dispatch(removeTransactionsByBudgetIdAction(id));
+    dispatch(removeTransactionsByBudgetIdAction(_id));
   };
 
   const handleSubmitForm = (
@@ -41,7 +41,7 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
     newCurrency: string
   ): void => {
     const newBudget: BudgetType = {
-      id,
+      _id,
       userId: googleUser?.googleId ? googleUser?.googleId : null,
       title: newTitle,
       amount: {
@@ -53,14 +53,19 @@ const BudgetModal: FC<BudgetType> = ({ id, title, amount }): JSX.Element => {
       date: new Date(),
     };
 
-    dispatch(editBudgetAction(newBudget));
-    dispatch(changeTransactions());
-
     if (googleUser)
-      axios.patch(`${dbUrl}/budgets/${id}`, {
-        ...newBudget,
-      });
-
+      axios
+        .patch(`${dbUrl}/budgets/${_id}`, {
+          ...newBudget,
+        })
+        .then(budget => {
+          dispatch(editBudgetAction(budget.data));
+          dispatch(changeTransactions());
+        });
+    else {
+      dispatch(editBudgetAction(newBudget));
+      dispatch(changeTransactions());
+    }
     context.handleClose();
   };
 

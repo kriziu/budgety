@@ -14,6 +14,7 @@ POST http://localhost:9000/.netlify/functions/api/transactions
 Content-Type: application/json
 
 {
+  "_id": "5",
   "userId": "1",
   "budgetId": "611f96baec8620547825f021",
   "title": "transaction 2",
@@ -33,3 +34,20 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:9000/.netlify/functions/api/transactions/611ff488aaee5827c8766845
+
+###
+
+PATCH http://localhost:9000/.netlify/functions/api/users/101497008729622412344
+Content-Type: application/json
+
+{
+  "currency": "PLN"
+}
+
+###
+
+GET http://localhost:9000/.netlify/functions/api/users/101497008729622412344
+
+###
+
+DELETE http://localhost:9000/.netlify/functions/api/users/5

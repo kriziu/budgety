@@ -14,7 +14,7 @@ const TransactionList: FC = (): JSX.Element => {
   const renderTransactions = (): JSX.Element[] => {
     return transactions.map(transaction => {
       return (
-        <CSSTransition timeout={200} classNames="slide" key={transaction.id}>
+        <CSSTransition timeout={200} classNames="slide" key={transaction._id}>
           <li>
             <Transaction {...transaction} />
           </li>

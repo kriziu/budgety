@@ -1,6 +1,8 @@
+import axios from 'axios';
 import { FC } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { dbUrl } from '../../constant/routes';
 
 import { RootState } from '../../store';
 import { setPrimaryCurrency } from '../../store/currency/actions';
@@ -13,6 +15,9 @@ const AllMoney: FC = (): JSX.Element => {
   const currency = useSelector((state: RootState) => state.currency);
   const primaryCurrency = useSelector(
     (state: RootState) => state.currency.primaryCurrency
+  );
+  const googleId = useSelector(
+    (state: RootState) => state.googleUser?.googleId
   );
 
   let money = 0;
@@ -29,6 +34,11 @@ const AllMoney: FC = (): JSX.Element => {
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     dispatch(setPrimaryCurrency(e.target.value));
+
+    if (googleId)
+      axios.patch(`${dbUrl}/users/${googleId}`, {
+        currency: e.target.value,
+      });
   };
 
   return (

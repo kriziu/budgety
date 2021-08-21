@@ -24,7 +24,7 @@ import {
 import { dbUrl } from '../../../../constant/routes';
 
 const Transaction: FC<TransactionType> = ({
-  id,
+  _id,
   budgetId,
   title,
   amount,
@@ -35,17 +35,17 @@ const Transaction: FC<TransactionType> = ({
   const [modalOpened, setModalOpened] = useState(false);
 
   const budget = useSelector((state: RootState) =>
-    state.budgets.filter(budget => budget.id === budgetId)
+    state.budgets.filter(budget => budget._id === budgetId)
   )[0];
   const googleUser = useSelector((state: RootState) => state.googleUser);
 
   const dateN = new Date(date);
 
   const handleDeleteTransaction = (): void => {
-    dispatch(removeTransactionAction(id));
+    dispatch(removeTransactionAction(_id));
     dispatch(changeTransactions());
 
-    if (googleUser) axios.delete(`${dbUrl}/transactions/${id}`);
+    if (googleUser) axios.delete(`${dbUrl}/transactions/${_id}`);
   };
 
   return (

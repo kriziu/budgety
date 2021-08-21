@@ -11,6 +11,7 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "json-server": "^0.16.3",
     "mongoose": "^5.13.7",
@@ -35,7 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lambda": "netlify-lambda serve server"
+    "lambda": "netlify-lambda serve server",
+    "lambda:build": "netlify-lambda build server"
   },
   "eslintConfig": {
     "extends": [

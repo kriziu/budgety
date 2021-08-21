@@ -8,6 +8,7 @@ import { timeout } from '../utils/utility';
 interface ReturnResponseType {
   budgets: BudgetType[];
   transactions: TransactionType[];
+  userCurrency: string;
 }
 
 export const dbAPI = async (
@@ -31,6 +32,20 @@ export const dbAPI = async (
     })
   ).data;
 
+  let userCurrency: string = '';
+
+  await axios
+    .get(`${dbUrl}/users/${googleUser?.googleId}`)
+    .then(res => {
+      userCurrency = res.data.currency;
+    })
+    .catch(() => {
+      axios.post(`${dbUrl}/users`, {
+        _id: googleUser?.googleId,
+        currency: 'USD',
+      });
+    });
+
   budgets = budgets.map(budget => {
     budget.date = new Date(budget.date);
     return budget;
@@ -41,5 +56,5 @@ export const dbAPI = async (
     return transaction;
   });
 
-  return { budgets, transactions };
+  return { budgets, transactions, userCurrency };
 };

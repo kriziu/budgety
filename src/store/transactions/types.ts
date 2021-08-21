@@ -2,7 +2,7 @@ import { ActionType } from 'typesafe-actions';
 import * as actions from './actions';
 
 export interface TransactionType {
-  id: string;
+  _id: string;
   budgetId: string;
   currency: string;
   userId: string | null;

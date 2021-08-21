@@ -22,4 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-functions
+/functions
+functions/api.js
+functions/api.js

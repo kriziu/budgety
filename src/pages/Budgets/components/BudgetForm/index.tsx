@@ -20,19 +20,22 @@ const BudgetForm: FC = () => {
     currency: string
   ): void => {
     const newBudget: BudgetType = {
-      id: uuidv4(),
-      userId: googleUser?.googleId ? googleUser?.googleId : null,
+      _id: uuidv4(),
+      userId: googleUser ? googleUser?.googleId : null,
       title: title,
       amount: { actual: amount, currency, diff: 0, starting: amount },
       date: new Date(),
     };
 
-    dispatch(addBudgetAction(newBudget));
-
     if (googleUser)
-      axios.post(`${dbUrl}/budgets`, {
-        ...newBudget,
-      });
+      axios
+        .post(`${dbUrl}/budgets`, {
+          ...newBudget,
+        })
+        .then(budget => {
+          dispatch(addBudgetAction(budget.data));
+        });
+    else dispatch(addBudgetAction(newBudget));
   };
 
   return <Form handleSubmit={handleSubmit} />;

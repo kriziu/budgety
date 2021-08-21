@@ -12,12 +12,12 @@ export const budgetsReducer = (
       return [...state, action.payload.budget];
 
     case Constants.REMOVE_BUDGET:
-      newState = state.filter(budget => budget.id !== action.payload.budgetId);
+      newState = state.filter(budget => budget._id !== action.payload.budgetId);
       return newState;
 
     case Constants.EDIT_BUDGET:
       newState = state.map(budget => {
-        if (budget.id === action.payload.budget.id) {
+        if (budget._id === action.payload.budget._id) {
           return action.payload.budget;
         }
         return budget;
@@ -35,7 +35,7 @@ export const budgetsReducer = (
             (transaction.amount / currency.currencies[transaction.currency]) *
             currency.currencies[budget.amount.currency];
 
-          if (transaction.budgetId === budget.id) {
+          if (transaction.budgetId === budget._id) {
             budget = {
               ...budget,
               amount: {

@@ -18,7 +18,7 @@ import {
   addTransactionAction,
   removeAllTransactionsAction,
 } from '../store/transactions/actions';
-import { updateCurrency } from '../store/currency/actions';
+import { setPrimaryCurrency, updateCurrency } from '../store/currency/actions';
 import { useRef } from 'react';
 import { currencyExchangeAPI } from '../api/currencyExchange';
 import { dbAPI } from '../api/db';
@@ -55,6 +55,8 @@ const App: FC = (): JSX.Element => {
         response.transactions.forEach(transaction => {
           dispatch(addTransactionAction(transaction));
         });
+
+        dispatch(setPrimaryCurrency(response.userCurrency));
 
         dispatch(changeTransactions());
       });

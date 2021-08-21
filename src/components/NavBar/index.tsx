@@ -23,9 +23,13 @@ import { routes } from '../../constant/routes';
 import { loginAction, logoutAction } from '../../store/googleUser/actions';
 import { RootState } from '../../store';
 import { loadState } from '../../store/localstorage';
-import { addBudgetAction } from '../../store/budgets/actions';
+import {
+  addBudgetAction,
+  changeTransactions,
+} from '../../store/budgets/actions';
 import { timeout } from '../../utils/utility';
 import { addTransactionAction } from '../../store/transactions/actions';
+import { setPrimaryCurrency } from '../../store/currency/actions';
 
 const NavBar: FC = (): JSX.Element => {
   const [opened, setOpened] = useState(false);
@@ -74,6 +78,9 @@ const NavBar: FC = (): JSX.Element => {
       state.transactions.forEach(transaction =>
         dispatch(addTransactionAction(transaction))
       );
+
+      dispatch(setPrimaryCurrency(state.currency.primaryCurrency));
+      dispatch(changeTransactions());
     }
   };
 

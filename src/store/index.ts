@@ -49,7 +49,6 @@ store.subscribe((): void => {
 
   if (state.googleUser === null)
     saveState({ budgets, transactions, currency, googleUser: null });
-  else saveState({ ...persState, currency });
 });
 
 export default store;

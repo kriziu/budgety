@@ -52,6 +52,10 @@ const Form: FC<FormProps> = ({
     currency && setFormCurrency(currency);
   }, [currency]);
 
+  useEffect(() => {
+    !currency && setFormCurrency(primaryCurrency);
+  }, [primaryCurrency, currency]);
+
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 

@@ -13,7 +13,7 @@ const BudgetList: FC = (): JSX.Element => {
 
   const renderBudgets = (): JSX.Element[] => {
     return budgets.map(budget => (
-      <CSSTransition timeout={200} classNames="slide" key={budget.id}>
+      <CSSTransition timeout={200} classNames="slide" key={budget._id}>
         <li>
           <Budget {...budget} />
         </li>

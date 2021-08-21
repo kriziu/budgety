@@ -29,6 +29,10 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
     currency && setCurrentCurrency(currency);
   }, [currency]);
 
+  useEffect(() => {
+    !currency && setCurrentCurrency(primaryCurrency);
+  }, [primaryCurrency, currency]);
+
   const renderCurrenciesOptions = (): JSX.Element[] => {
     return Object.entries(currencies).map(currency => {
       return (

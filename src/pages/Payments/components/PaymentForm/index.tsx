@@ -24,7 +24,7 @@ const PaymentForm: FC = () => {
 
   useEffect(() => {
     if (budgetsLength.current !== budgets.length) {
-      if (budgets[0]) setSelectedBudgetId(budgets[0].id);
+      if (budgets[0]) setSelectedBudgetId(budgets[0]._id);
       else setSelectedBudgetId('');
     }
     return () => {
@@ -38,7 +38,7 @@ const PaymentForm: FC = () => {
     currency: string
   ): void => {
     const newTransaction: TransactionType = {
-      id: uuidv4(),
+      _id: uuidv4(),
       currency,
       budgetId: selectedBudgetId,
       userId: googleUser ? googleUser.googleId : null,
@@ -47,19 +47,25 @@ const PaymentForm: FC = () => {
       date: new Date(),
     };
 
-    dispatch(addTransactionAction(newTransaction));
-    dispatch(changeTransactions());
-
     if (googleUser)
-      axios.post(`${dbUrl}/transactions`, {
-        ...newTransaction,
-      });
+      axios
+        .post(`${dbUrl}/transactions`, {
+          ...newTransaction,
+        })
+        .then(transaction => {
+          dispatch(addTransactionAction(transaction.data));
+          dispatch(changeTransactions());
+        });
+    else {
+      dispatch(addTransactionAction(newTransaction));
+      dispatch(changeTransactions());
+    }
   };
 
   const renderOptions = (): JSX.Element[] => {
     return budgets.map(budget => {
       return (
-        <option key={budget.id} value={budget.id}>
+        <option key={budget._id} value={budget._id}>
           {budget.title}: {budget.amount.actual.toFixed(2)}{' '}
           {budget.amount.currency}
         </option>
@@ -74,7 +80,7 @@ const PaymentForm: FC = () => {
   };
 
   const selectedBudget = budgets.filter(
-    budget => budget.id === selectedBudgetId
+    budget => budget._id === selectedBudgetId
   )[0];
 
   return (

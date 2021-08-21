@@ -13,7 +13,7 @@ export const transactionReducer = (
 
     case Constants.REMOVE_TRANSACTION:
       newState = state.filter(
-        transaction => transaction.id !== action.payload.transactionId
+        transaction => transaction._id !== action.payload.transactionId
       );
       return newState;
 
@@ -25,7 +25,7 @@ export const transactionReducer = (
 
     case Constants.EDIT_TRANSACTION:
       newState = state.map(transaction => {
-        if (transaction.id === action.payload.transaction.id) {
+        if (transaction._id === action.payload.transaction._id) {
           return action.payload.transaction;
         }
         return transaction;
