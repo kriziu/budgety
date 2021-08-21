@@ -3,7 +3,6 @@ import { GoogleLoginResponse } from 'react-google-login';
 import { dbUrl } from '../constant/routes';
 import { BudgetType } from '../store/budgets/types';
 import { TransactionType } from '../store/transactions/types';
-import { timeout } from '../utils/utility';
 
 interface ReturnResponseType {
   budgets: BudgetType[];

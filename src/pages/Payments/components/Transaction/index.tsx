@@ -47,7 +47,7 @@ const Transaction: FC<TransactionType> = ({
     if (selectedBudget) {
       setBudget(selectedBudget);
     }
-  }, [budgets]);
+  }, [budgets, budgetId]);
 
   const handleDeleteTransaction = (): void => {
     dispatch(removeTransactionAction(_id));
