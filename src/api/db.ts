@@ -14,8 +14,6 @@ interface ReturnResponseType {
 export const dbAPI = async (
   googleUser: GoogleLoginResponse['profileObj']
 ): Promise<ReturnResponseType> => {
-  await timeout(250);
-
   let budgets: BudgetType[] = await (
     await axios.get(`${dbUrl}/budgets`, {
       params: {

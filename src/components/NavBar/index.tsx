@@ -73,7 +73,7 @@ const NavBar: FC = (): JSX.Element => {
     dispatch(logoutAction());
 
     if (state) {
-      await timeout(500);
+      await timeout(100);
       state.budgets.forEach(budget => dispatch(addBudgetAction(budget)));
       state.transactions.forEach(transaction =>
         dispatch(addTransactionAction(transaction))

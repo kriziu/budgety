@@ -43,7 +43,7 @@ const App: FC = (): JSX.Element => {
   useEffect(() => {
     if (!firstRender.current) {
       dispatch(removeAllTransactionsAction());
-      setTimeout(() => dispatch(removeAllBudgetsAction()), 250);
+      dispatch(removeAllBudgetsAction());
       dispatch(changeTransactions());
     }
 

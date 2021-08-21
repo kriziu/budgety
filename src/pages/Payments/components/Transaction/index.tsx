@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FC } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +22,7 @@ import {
   Title,
 } from './Elements';
 import { dbUrl } from '../../../../constant/routes';
+import { BudgetType } from '../../../../store/budgets/types';
 
 const Transaction: FC<TransactionType> = ({
   _id,
@@ -34,12 +35,19 @@ const Transaction: FC<TransactionType> = ({
   const dispatch = useDispatch();
   const [modalOpened, setModalOpened] = useState(false);
 
-  const budget = useSelector((state: RootState) =>
-    state.budgets.filter(budget => budget._id === budgetId)
-  )[0];
+  const [budget, setBudget] = useState<null | BudgetType>(null);
+  const budgets = useSelector((state: RootState) => state.budgets);
   const googleUser = useSelector((state: RootState) => state.googleUser);
 
   const dateN = new Date(date);
+
+  useEffect(() => {
+    const selectedBudget = budgets.filter(budget => budget._id === budgetId)[0];
+
+    if (selectedBudget) {
+      setBudget(selectedBudget);
+    }
+  }, [budgets]);
 
   const handleDeleteTransaction = (): void => {
     dispatch(removeTransactionAction(_id));
@@ -53,7 +61,7 @@ const Transaction: FC<TransactionType> = ({
       <Container>
         <div style={{ flex: 1 }}>
           <Title>{title}</Title>
-          <SmallTitle>{budget.title}</SmallTitle>
+          {budget && <SmallTitle>{budget.title}</SmallTitle>}
           <DateHeader>
             {dateN.getFancyDate()} | {dateN.getFancyHours()}
           </DateHeader>

@@ -12,15 +12,13 @@ const TransactionList: FC = (): JSX.Element => {
   const transactions = useSelector((state: RootState) => state.transactions);
 
   const renderTransactions = (): JSX.Element[] => {
-    return transactions.map(transaction => {
-      return (
-        <CSSTransition timeout={200} classNames="slide" key={transaction._id}>
-          <li>
-            <Transaction {...transaction} />
-          </li>
-        </CSSTransition>
-      );
-    });
+    return transactions.map(transaction => (
+      <CSSTransition timeout={200} classNames="slide" key={transaction._id}>
+        <li>
+          <Transaction {...transaction} />
+        </li>
+      </CSSTransition>
+    ));
   };
 
   return (
