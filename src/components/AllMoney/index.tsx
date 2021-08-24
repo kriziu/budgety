@@ -6,6 +6,7 @@ import { dbUrl } from '../../constant/routes';
 
 import { RootState } from '../../store';
 import { setPrimaryCurrency } from '../../store/currency/actions';
+import { setLoaderAction, unsetLoaderAction } from '../../store/loader';
 import CurrencySelector from '../CurrencySelector';
 import { Header } from './Elements';
 
@@ -33,12 +34,18 @@ const AllMoney: FC = (): JSX.Element => {
   const handleCurrencyChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    dispatch(setPrimaryCurrency(e.target.value));
+    if (googleId) {
+      dispatch(setLoaderAction());
 
-    if (googleId)
-      axios.patch(`${dbUrl}/users/${googleId}`, {
-        currency: e.target.value,
-      });
+      axios
+        .patch(`${dbUrl}/users/${googleId}`, {
+          currency: e.target.value,
+        })
+        .then(() => {
+          dispatch(setPrimaryCurrency(e.target.value));
+          dispatch(unsetLoaderAction());
+        });
+    } else dispatch(setPrimaryCurrency(e.target.value));
   };
 
   return (

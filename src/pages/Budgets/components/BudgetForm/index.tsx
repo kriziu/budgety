@@ -9,6 +9,7 @@ import { addBudgetAction } from '../../../../store/budgets/actions';
 import { BudgetType } from '../../../../store/budgets/types';
 import Form from '../../../../components/Form';
 import { dbUrl } from '../../../../constant/routes';
+import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 
 const BudgetForm: FC = () => {
   const dispatch = useDispatch();
@@ -27,15 +28,18 @@ const BudgetForm: FC = () => {
       date: new Date(),
     };
 
-    if (googleUser)
+    if (googleUser) {
+      dispatch(setLoaderAction());
+
       axios
         .post(`${dbUrl}/budgets`, {
           ...newBudget,
         })
         .then(budget => {
           dispatch(addBudgetAction(budget.data));
+          dispatch(unsetLoaderAction());
         });
-    else dispatch(addBudgetAction(newBudget));
+    } else dispatch(addBudgetAction(newBudget));
   };
 
   return <Form handleSubmit={handleSubmit} />;

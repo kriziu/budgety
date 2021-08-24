@@ -23,6 +23,7 @@ import {
 } from './Elements';
 import { dbUrl } from '../../../../constant/routes';
 import { BudgetType } from '../../../../store/budgets/types';
+import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 
 const Transaction: FC<TransactionType> = ({
   _id,
@@ -50,10 +51,14 @@ const Transaction: FC<TransactionType> = ({
   }, [budgets, budgetId]);
 
   const handleDeleteTransaction = (): void => {
-    dispatch(removeTransactionAction(_id));
-    dispatch(changeTransactions());
-
-    if (googleUser) axios.delete(`${dbUrl}/transactions/${_id}`);
+    if (googleUser) {
+      dispatch(setLoaderAction());
+      axios.delete(`${dbUrl}/transactions/${_id}`).then(() => {
+        dispatch(removeTransactionAction(_id));
+        dispatch(changeTransactions());
+        dispatch(unsetLoaderAction());
+      });
+    }
   };
 
   return (

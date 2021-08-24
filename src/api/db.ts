@@ -11,8 +11,12 @@ interface ReturnResponseType {
 }
 
 export const dbAPI = async (
-  googleUser: GoogleLoginResponse['profileObj']
+  googleUser: GoogleLoginResponse['profileObj'],
+  setLoading: () => void,
+  unsetLoading: () => void
 ): Promise<ReturnResponseType> => {
+  setLoading();
+
   let budgets: BudgetType[] = await (
     await axios.get(`${dbUrl}/budgets`, {
       params: {
@@ -53,5 +57,6 @@ export const dbAPI = async (
     return transaction;
   });
 
+  unsetLoading();
   return { budgets, transactions, userCurrency };
 };

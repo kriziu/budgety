@@ -6,6 +6,7 @@ import { BudgetsState } from './budgets/types';
 import { currencyReducer } from './currency/reducer';
 import { CurrencyType } from './currency/types';
 import { googleUserReducer } from './googleUser/reducer';
+import { loaderReducer } from './loader';
 import { loadState, saveState } from './localstorage';
 import { transactionReducer } from './transactions/reducer';
 import { TransactionState } from './transactions/types';
@@ -15,6 +16,7 @@ export interface RootState {
   transactions: TransactionState;
   googleUser: GoogleLoginResponse['profileObj'] | null;
   currency: CurrencyType;
+  loader: boolean;
 }
 
 declare global {
@@ -32,6 +34,7 @@ const store = createStore(
     transactions: transactionReducer,
     googleUser: googleUserReducer,
     currency: currencyReducer,
+    loader: loaderReducer,
   }),
   persistedState,
   composeEnhancers()
@@ -46,9 +49,10 @@ store.subscribe((): void => {
     transaction => transaction.userId === null
   );
   const currency = state.currency;
+  const loader = state.loader;
 
   if (state.googleUser === null)
-    saveState({ budgets, transactions, currency, googleUser: null });
+    saveState({ budgets, transactions, currency, loader, googleUser: null });
 });
 
 export default store;

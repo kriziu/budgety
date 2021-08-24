@@ -30,3 +30,10 @@ export const Container = styled.div`
     width: 50rem;
   }
 `;
+
+export const Center = styled.div`
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+`;

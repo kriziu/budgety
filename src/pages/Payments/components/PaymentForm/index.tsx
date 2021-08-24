@@ -14,6 +14,7 @@ import { Label } from '../../../../components/Form/Elements';
 import BudgetInfo from '../../../../components/BudgetInfo';
 import { Button } from '../../../../components/Button';
 import { dbUrl } from '../../../../constant/routes';
+import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 
 const PaymentForm: FC = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,8 @@ const PaymentForm: FC = () => {
       date: new Date(),
     };
 
-    if (googleUser)
+    if (googleUser) {
+      dispatch(setLoaderAction());
       axios
         .post(`${dbUrl}/transactions`, {
           ...newTransaction,
@@ -55,8 +57,9 @@ const PaymentForm: FC = () => {
         .then(transaction => {
           dispatch(addTransactionAction(transaction.data));
           dispatch(changeTransactions());
+          dispatch(unsetLoaderAction());
         });
-    else {
+    } else {
       dispatch(addTransactionAction(newTransaction));
       dispatch(changeTransactions());
     }

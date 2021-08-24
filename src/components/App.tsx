@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,9 +19,11 @@ import {
   removeAllTransactionsAction,
 } from '../store/transactions/actions';
 import { setPrimaryCurrency, updateCurrency } from '../store/currency/actions';
-import { useRef } from 'react';
 import { currencyExchangeAPI } from '../api/currencyExchange';
 import { dbAPI } from '../api/db';
+import Modal from './Modal';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { setLoaderAction, unsetLoaderAction } from '../store/loader';
 
 const Container = styled.div`
   width: 100vw;
@@ -38,6 +40,13 @@ const App: FC = (): JSX.Element => {
   const googleUser = useSelector((state: RootState) => state.googleUser);
   const currencyFromState = useSelector((state: RootState) => state.currency);
   const firstRender = useRef(true);
+  const loader = useSelector((state: RootState) => state.loader);
+
+  const setLoader = useCallback(() => dispatch(setLoaderAction()), [dispatch]);
+  const unsetLoader = useCallback(
+    () => dispatch(unsetLoaderAction()),
+    [dispatch]
+  );
 
   // DATABASE
   useEffect(() => {
@@ -48,7 +57,7 @@ const App: FC = (): JSX.Element => {
     }
 
     if (googleUser) {
-      dbAPI(googleUser).then(response => {
+      dbAPI(googleUser, setLoader, unsetLoader).then(response => {
         response.budgets.forEach(budget => {
           dispatch(addBudgetAction(budget));
         });
@@ -65,7 +74,7 @@ const App: FC = (): JSX.Element => {
     return () => {
       firstRender.current = false;
     };
-  }, [googleUser, dispatch]);
+  }, [googleUser, dispatch, setLoader, unsetLoader]);
 
   // CURRENCY
   useEffect(() => {
@@ -85,6 +94,11 @@ const App: FC = (): JSX.Element => {
           </main>
         </Router>
       </Container>
+      {loader && (
+        <Modal closeModal={() => {}} container={false} closable={false}>
+          <ClipLoader size="8rem" color="silver" />
+        </Modal>
+      )}
     </>
   );
 };

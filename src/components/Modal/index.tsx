@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import { FC, useRef } from 'react';
 
-import { Background, Container } from './Elements';
+import { Background, Center, Container } from './Elements';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { createContext } from 'react';
@@ -13,9 +13,16 @@ export const ModalContext = createContext({ handleClose: () => {} });
 interface ModalProps {
   children: JSX.Element;
   closeModal: () => void;
+  closable?: boolean;
+  container?: boolean;
 }
 
-const Modal: FC<ModalProps> = ({ children, closeModal }): JSX.Element => {
+const Modal: FC<ModalProps> = ({
+  children,
+  closeModal,
+  closable = true,
+  container = true,
+}): JSX.Element => {
   const [animating, setAnimating] = useState(true);
   const bgRef = useRef(null);
 
@@ -31,7 +38,7 @@ const Modal: FC<ModalProps> = ({ children, closeModal }): JSX.Element => {
   const handleBgClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
-    if (e.target === bgRef.current) {
+    if (e.target === bgRef.current && closable) {
       handleClose();
     }
   };
@@ -42,11 +49,17 @@ const Modal: FC<ModalProps> = ({ children, closeModal }): JSX.Element => {
       ref={bgRef}
       onClick={e => handleBgClick(e)}
     >
-      <Container>
+      {container ? (
+        <Container>
+          <ModalContext.Provider value={{ handleClose }}>
+            {children}
+          </ModalContext.Provider>
+        </Container>
+      ) : (
         <ModalContext.Provider value={{ handleClose }}>
-          {children}
+          <Center>{children}</Center>
         </ModalContext.Provider>
-      </Container>
+      )}
     </Background>,
     modalRoot
   );
