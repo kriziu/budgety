@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef } from 'react';
 
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 
 import GlobalStyle from './GlobalStyles';
