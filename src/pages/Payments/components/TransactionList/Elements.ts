@@ -5,6 +5,20 @@ export const List = styled.ul`
   list-style-type: none;
   margin-top: 4rem;
 
+  li {
+    margin: 0;
+    padding: 0;
+
+    :not(:last-child) {
+      margin-bottom: 3rem;
+    }
+  }
+`;
+
+export const Container = styled.div`
+  margin: 4rem auto;
+  padding: 0 4rem;
+
   @media (min-width: ${breakpoints.mobile}) {
     width: 80%;
   }
@@ -15,15 +29,6 @@ export const List = styled.ul`
 
   @media (min-width: ${breakpoints.desktop}) {
     width: 55%;
-  }
-
-  li {
-    margin: 0;
-    padding: 0;
-
-    :not(:last-child) {
-      margin-bottom: 3rem;
-    }
   }
 `;
 

@@ -8,6 +8,7 @@ import Transaction from '../Transaction';
 import { List, Select } from './Elements';
 import '../../../../constant/style/animations.css';
 import { Label } from '../../../../components/Form/Elements';
+import { Container } from './Elements';
 
 const TransactionList: FC = (): JSX.Element => {
   const transactions = useSelector((state: RootState) => state.transactions);
@@ -78,7 +79,7 @@ const TransactionList: FC = (): JSX.Element => {
   };
 
   return (
-    <div style={{ margin: '4rem auto', padding: '0 4rem' }}>
+    <Container>
       <Label>Filter transactions</Label>
       <Select onChange={handleSelectFilterChange} value={selectedBudgetId}>
         <option value="">All</option>
@@ -98,7 +99,7 @@ const TransactionList: FC = (): JSX.Element => {
           {renderTransactions()}
         </TransitionGroup>
       </List>
-    </div>
+    </Container>
   );
 };
 
