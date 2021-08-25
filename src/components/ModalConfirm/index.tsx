@@ -13,6 +13,12 @@ const ModalConfirm: FC<ModalConfirmProps> = ({ handleAction }): JSX.Element => {
 
   const handleClose = (): void => context.handleClose();
 
+  const handleActionClicked = (): void => {
+    context.handleClose();
+
+    handleAction();
+  };
+
   return (
     <div>
       <Header>Are you sure?</Header>
@@ -31,7 +37,7 @@ const ModalConfirm: FC<ModalConfirmProps> = ({ handleAction }): JSX.Element => {
           color="gray-dark"
           textColor="white"
           style={{ width: '48%' }}
-          onClick={handleAction}
+          onClick={handleActionClicked}
         >
           Delete
         </Button>
