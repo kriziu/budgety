@@ -1,10 +1,17 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import useForm from '../../hooks/useForm';
 import { Input } from '../Input';
-import { Container, StyledForm, Label, Warning } from './Elements';
+import {
+  Container,
+  StyledForm,
+  Label,
+  Warning,
+  MinPlus,
+  MinPlusIcon,
+} from './Elements';
 import { Button } from '../Button';
 import CurrencySelector from '../CurrencySelector';
 import { RootState } from '../../store';
@@ -45,6 +52,8 @@ const Form: FC<FormProps> = ({
   );
 
   const [formCurrency, setFormCurrency] = useState(primaryCurrency);
+  const [minus, setMinus] = useState(false);
+  const clicked = useRef(false);
 
   const { title, amount } = formData;
 
@@ -78,7 +87,9 @@ const Form: FC<FormProps> = ({
       }
 
       if (amountCheck || titleCheck) return;
-      const amountNum = parseFloat(formData.amount.value);
+      let amountNum = parseFloat(formData.amount.value);
+
+      if (minus && amountNum > 0) amountNum = amountNum * -1;
 
       handleSubmit(title.value, amountNum, formCurrency);
 
@@ -86,11 +97,27 @@ const Form: FC<FormProps> = ({
         title: { ...title, value: '' },
         amount: { ...amount, value: '' },
       });
+
+      setMinus(false);
+      clicked.current = false;
     }
   };
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormCurrency(e.target.value);
+  };
+
+  const handleInputChangeNew = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (parseFloat(e.target.value) < 0) setMinus(true);
+    else if (parseFloat(e.target.value) >= 0 && !clicked.current)
+      setMinus(false);
+    handleInputChange(e);
+  };
+
+  const handleMinPlusClick = () => {
+    setMinus(!minus);
+    if (minus) clicked.current = false;
+    else clicked.current = true;
   };
 
   return (
@@ -107,7 +134,7 @@ const Form: FC<FormProps> = ({
           id="title"
           name="title"
           type="text"
-          placeholder="Enter budget title"
+          placeholder="Enter title"
           value={title.value}
           onChange={handleInputChange}
         />
@@ -115,13 +142,17 @@ const Form: FC<FormProps> = ({
       </Container>
       <Container style={{ position: 'relative' }}>
         <Label htmlFor="amount">Amount</Label>
+        <MinPlus onClick={handleMinPlusClick}>
+          <MinPlusIcon minus={!minus}></MinPlusIcon>
+        </MinPlus>
         <Input
           id="amount"
           name="amount"
           type="number"
-          placeholder="Enter budget amount"
+          placeholder="Enter amount"
           value={amount.value}
-          onChange={handleInputChange}
+          onChange={handleInputChangeNew}
+          style={{ padding: '1rem 5rem' }}
         />
         <CurrencySelector
           color="black"

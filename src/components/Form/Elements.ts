@@ -38,3 +38,36 @@ export const Warning = styled.p`
   position: absolute;
   margin-top: 0.7rem;
 `;
+
+export const MinPlus = styled.div`
+  padding: 1.83rem 1.5rem;
+  border: 1px solid var(--color-gray);
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  width: min-content;
+  position: absolute;
+  background-color: var(--color-white);
+`;
+
+export const MinPlusIcon = styled.div<{ minus: boolean }>`
+  pointer-events: none;
+  width: 1.3rem;
+  height: 2px;
+  background-color: ${props =>
+    props.minus ? 'var(--color-green)' : 'var(--color-red)'};
+
+  transform: ${props => (props.minus ? 'rotate(180deg)' : 'rotate(0)')};
+
+  transition: var(--trans-default);
+
+  ::after {
+    content: '';
+    display: block;
+    width: inherit;
+    height: inherit;
+    background-color: ${props =>
+      props.minus ? 'var(--color-green)' : 'var(--color-red)'};
+    transition: var(--trans-default);
+    transform: ${props => (props.minus ? `rotate(270deg)` : `rotate(0)`)};
+  }
+`;
