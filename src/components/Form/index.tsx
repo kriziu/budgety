@@ -126,7 +126,7 @@ const Form: FC<FormProps> = ({
         <CurrencySelector
           color="black"
           onChangeAction={handleCurrencyChange}
-          style={{ fontSize: '2.7rem', position: 'absolute', right: '0' }}
+          style={{ fontSize: '2.85rem', position: 'absolute', right: '0' }}
           currency={formCurrency}
         />
         {!amount.checked && <Warning>Fill out this field!</Warning>}

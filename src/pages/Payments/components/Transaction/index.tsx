@@ -58,6 +58,9 @@ const Transaction: FC<TransactionType> = ({
         dispatch(changeTransactions());
         dispatch(unsetLoaderAction());
       });
+    } else {
+      dispatch(removeTransactionAction(_id));
+      dispatch(changeTransactions());
     }
   };
 
