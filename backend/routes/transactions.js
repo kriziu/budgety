@@ -67,4 +67,13 @@ router.delete('/:id', getTransaction, async (req, res) => {
   }
 });
 
+router.delete('/', async (req, res) => {
+  try {
+    await Transaction.deleteMany({ budgetId: req.query.budgetId });
+    res.json({ message: `Deleted transactions ${req.query.budgetId}` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

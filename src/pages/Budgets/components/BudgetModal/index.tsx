@@ -34,8 +34,11 @@ const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
       dispatch(setLoaderAction());
       axios.delete(`${dbUrl}/budgets/${_id}`).then(() => {
         dispatch(removeBudgetAction(_id));
-        dispatch(removeTransactionsByBudgetIdAction(_id));
-        dispatch(unsetLoaderAction());
+
+        axios.delete(`${dbUrl}/transactions?budgetId=${_id}`).then(() => {
+          dispatch(removeTransactionsByBudgetIdAction(_id));
+          dispatch(unsetLoaderAction());
+        });
       });
     } else {
       dispatch(removeBudgetAction(_id));

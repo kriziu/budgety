@@ -1,6 +1,4 @@
-GET http://localhost:9000/.netlify/functions/api/transactions
 
-###
 
 GET http://localhost:9000/.netlify/functions/api/transactions/1
 
@@ -10,13 +8,12 @@ GET http://localhost:9000/.netlify/functions/api/transactions?userId=2
 
 ###
 
-POST http://localhost:9000/.netlify/functions/api/transactions
+POST http://localhost:8080/transactions
 Content-Type: application/json
 
 {
-  "_id": "5",
   "userId": "1",
-  "budgetId": "611f96baec8620547825f021",
+  "budgetId": "5",
   "title": "transaction 2",
   "amount": 50,
   "currency": "PLN"
@@ -50,4 +47,11 @@ GET http://localhost:9000/.netlify/functions/api/users/101497008729622412344
 
 ###
 
-DELETE http://localhost:9000/.netlify/functions/api/users/5
+DELETE http://localhost:8080/transactions?budgetId=5
+
+###
+
+GET http://localhost:8080/transactions/
+
+###
+
