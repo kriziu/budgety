@@ -38,6 +38,7 @@ export const SmallMoneyHeader = styled.h3`
   position: absolute;
   top: 50%;
   left: 50%;
+  width: max-content;
   transform: translateY(-50%) translateX(-50%);
 `;
 
