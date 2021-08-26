@@ -11,6 +11,7 @@ import {
   Warning,
   MinPlus,
   MinPlusIcon,
+  Header,
 } from './Elements';
 import { Button } from '../Button';
 import CurrencySelector from '../CurrencySelector';
@@ -27,6 +28,7 @@ interface FormProps {
   };
   currency?: string;
   style?: {};
+  pageTitle?: string;
 }
 
 const Form: FC<FormProps> = ({
@@ -38,6 +40,7 @@ const Form: FC<FormProps> = ({
   data,
   currency,
   style,
+  pageTitle,
 }): JSX.Element => {
   const [formData, setFormData, toggleChecked, handleInputChange] = useForm(
     data
@@ -142,6 +145,11 @@ const Form: FC<FormProps> = ({
       autoComplete="off"
       style={style}
     >
+      {pageTitle && (
+        <Container>
+          <Header>{pageTitle}</Header>
+        </Container>
+      )}
       <Container>{childrenBefore}</Container>
       <Container>
         <Label htmlFor="title">Title</Label>

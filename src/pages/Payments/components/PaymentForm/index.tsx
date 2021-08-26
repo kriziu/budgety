@@ -104,6 +104,7 @@ const PaymentForm: FC = () => {
           </Select>
         </>
       }
+      pageTitle="Payments"
     >
       <>
         {budgets[0] && (

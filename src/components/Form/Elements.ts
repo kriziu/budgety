@@ -71,3 +71,8 @@ export const MinPlusIcon = styled.div<{ minus: boolean }>`
     transform: ${props => (props.minus ? `rotate(270deg)` : `rotate(0)`)};
   }
 `;
+
+export const Header = styled.h1`
+  font-weight: normal;
+  text-align: center;
+`;

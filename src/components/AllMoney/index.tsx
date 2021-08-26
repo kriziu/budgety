@@ -7,6 +7,7 @@ import { dbUrl } from '../../constant/routes';
 import { RootState } from '../../store';
 import { setPrimaryCurrency } from '../../store/currency/actions';
 import { setLoaderAction, unsetLoaderAction } from '../../store/loader';
+import { getMoneyColor } from '../../utils/ux';
 import CurrencySelector from '../CurrencySelector';
 import { Header } from './Elements';
 
@@ -49,9 +50,12 @@ const AllMoney: FC = (): JSX.Element => {
   };
 
   return (
-    <Header>
+    <Header color={getMoneyColor(money)}>
       {money.toFixed(2)}{' '}
-      <CurrencySelector color="green" onChangeAction={handleCurrencyChange} />
+      <CurrencySelector
+        color={getMoneyColor(money)}
+        onChangeAction={handleCurrencyChange}
+      />
     </Header>
   );
 };

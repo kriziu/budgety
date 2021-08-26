@@ -42,7 +42,7 @@ const BudgetForm: FC = () => {
     } else dispatch(addBudgetAction(newBudget));
   };
 
-  return <Form handleSubmit={handleSubmit} />;
+  return <Form handleSubmit={handleSubmit} pageTitle="Budgets" />;
 };
 
 export default BudgetForm;
