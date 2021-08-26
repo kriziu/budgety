@@ -65,6 +65,21 @@ const Form: FC<FormProps> = ({
     !currency && setFormCurrency(primaryCurrency);
   }, [primaryCurrency, currency]);
 
+  useEffect(() => {
+    if (parseFloat(amount.value) < 0) {
+      setFormData({
+        title: { ...title },
+        amount: {
+          ...amount,
+          value: (parseFloat(amount.value) * -1).toFixed(),
+        },
+      });
+      setMinus(true);
+      clicked.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
@@ -87,7 +102,7 @@ const Form: FC<FormProps> = ({
       }
 
       if (amountCheck || titleCheck) return;
-      let amountNum = parseFloat(formData.amount.value);
+      let amountNum = parseFloat(amount.value);
 
       if (minus && amountNum > 0) amountNum = amountNum * -1;
 
