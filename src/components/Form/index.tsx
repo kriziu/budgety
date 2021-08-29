@@ -150,7 +150,7 @@ const Form: FC<FormProps> = ({
           <Header>{pageTitle}</Header>
         </Container>
       )}
-      <Container>{childrenBefore}</Container>
+      {childrenBefore && <Container>{childrenBefore}</Container>}
       <Container>
         <Label htmlFor="title">Title</Label>
         <Input

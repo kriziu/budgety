@@ -1,4 +1,4 @@
-import { FC, useRef, useState, useEffect } from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,18 +9,32 @@ import { addTransactionAction } from '../../../../store/transactions/actions';
 import { TransactionType } from '../../../../store/transactions/types';
 import Form from '../../../../components/Form';
 import { changeTransactions } from '../../../../store/budgets/actions';
-import { Select, Container } from './Elements';
+import { Select, Container, StyledP } from './Elements';
 import { Label } from '../../../../components/Form/Elements';
 import BudgetInfo from '../../../../components/BudgetInfo';
 import { Button } from '../../../../components/Button';
 import { dbUrl } from '../../../../constant/routes';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
+import { CheckBox } from '../../../../components/Checkbox';
+import { Input } from '../../../../components/Input';
+
+interface RepeatTransactionType {
+  repeat: boolean;
+  every: string;
+  type: string;
+}
 
 const PaymentForm: FC = () => {
   const dispatch = useDispatch();
   const budgets = useSelector((state: RootState) => state.budgets);
   const googleUser = useSelector((state: RootState) => state.googleUser);
   const [selectedBudgetId, setSelectedBudgetId] = useState('');
+  const [repeatTransaction, setRepeatTransaction] =
+    useState<RepeatTransactionType>({
+      repeat: false,
+      every: '1',
+      type: 'hours',
+    });
   let budgetsLength = useRef(-1);
 
   useEffect(() => {
@@ -69,8 +83,7 @@ const PaymentForm: FC = () => {
     return budgets.map(budget => {
       return (
         <option key={budget._id} value={budget._id}>
-          {budget.title}: {budget.amount.actual.toFixed(2)}{' '}
-          {budget.amount.currency}
+          {budget.title}: {budget.amount.actual.toFixed(2)} {budget.currency}
         </option>
       );
     });
@@ -86,12 +99,39 @@ const PaymentForm: FC = () => {
     budget => budget._id === selectedBudgetId
   )[0];
 
+  const handleCheckboxCheck = (): void => {
+    setRepeatTransaction({
+      ...repeatTransaction,
+      repeat: !repeatTransaction.repeat,
+    });
+  };
+
+  const handleInputRepeatChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    if (
+      (!isNaN(parseInt(e.target.value)) && parseInt(e.target.value) > 0) ||
+      e.target.value === ''
+    ) {
+      setRepeatTransaction({
+        ...repeatTransaction,
+        every: e.target.value,
+      });
+    }
+  };
+
+  const handleSelectTypeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
+    setRepeatTransaction({ ...repeatTransaction, type: e.target.value });
+  };
+
   return (
     <Form
       handleSubmit={handleSubmit}
       disabled={!budgets.length}
       button={false}
-      currency={selectedBudget && selectedBudget.amount.currency}
+      currency={selectedBudget && selectedBudget.currency}
       childrenBefore={
         <>
           <Label htmlFor="selectBudget">Select a budget</Label>
@@ -107,6 +147,41 @@ const PaymentForm: FC = () => {
       pageTitle="Payments"
     >
       <>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <CheckBox
+            checked={repeatTransaction.repeat}
+            onClick={handleCheckboxCheck}
+          />
+          <StyledP checked={repeatTransaction.repeat}>
+            Repeat every
+            <Input
+              style={{
+                width: '4rem',
+                padding: '.5rem',
+                color: !repeatTransaction.repeat ? 'lightgray' : 'black',
+              }}
+              onChange={handleInputRepeatChange}
+              maxLength={3}
+              value={repeatTransaction.every}
+              disabled={!repeatTransaction.repeat}
+            />
+            <Select
+              style={{
+                width: '8rem',
+                padding: '.5rem',
+              }}
+              value={repeatTransaction.type}
+              onChange={handleSelectTypeChange}
+              disabled={!repeatTransaction.repeat}
+            >
+              <option value="hours">hours</option>
+              <option value="days">days</option>
+              <option value="month">month</option>
+              <option value="year">year</option>
+            </Select>
+          </StyledP>
+        </div>
+
         {budgets[0] && (
           <Container>
             {selectedBudgetId && <BudgetInfo {...selectedBudget} />}

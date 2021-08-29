@@ -23,3 +23,12 @@ export const Container = styled.div`
   height: 14rem;
   flex-direction: column;
 `;
+
+export const StyledP = styled.p<{ checked: boolean }>`
+  font-size: 2rem;
+  margin-left: 1rem;
+  transition: var(--trans-default);
+  display: flex;
+  align-items: center;
+  color: ${props => `var(--color-gray${props.checked ? '-dark)' : ')'}`};
+`;

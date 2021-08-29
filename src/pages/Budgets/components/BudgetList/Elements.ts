@@ -9,6 +9,7 @@ export const StyledList = styled.ul`
   gap: 4rem;
   grid-template-columns: repeat(auto-fit, 23rem);
   padding: 0 4rem;
+  align-items: center;
 
   display: grid;
 `;
