@@ -46,6 +46,7 @@ router.post('/', async (req, res) => {
     currency: req.body.currency,
     title: req.body.title,
     amount: req.body.amount,
+    repeat: req.body.repeat,
     date: req.body.date,
   });
 

@@ -8,6 +8,11 @@ export interface TransactionType {
   userId: string | null;
   title: string;
   amount: number;
+  repeat: {
+    repeat: boolean;
+    every: number;
+    type: string;
+  };
   date: Date;
 }
 

@@ -21,6 +21,11 @@ const transactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  repeat: {
+    repeat: { type: Boolean, required: true },
+    every: { type: Number, required: true },
+    type: { type: String, required: true },
+  },
   date: {
     type: Date,
     required: true,

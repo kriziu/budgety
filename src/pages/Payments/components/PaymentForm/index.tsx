@@ -59,8 +59,18 @@ const PaymentForm: FC = () => {
       userId: googleUser ? googleUser.googleId : null,
       title,
       amount,
+      repeat: {
+        ...repeatTransaction,
+        every: parseInt(repeatTransaction.every),
+      },
       date: new Date(),
     };
+
+    setRepeatTransaction({
+      repeat: false,
+      every: '1',
+      type: 'hours',
+    });
 
     if (googleUser) {
       dispatch(setLoaderAction());
@@ -83,7 +93,8 @@ const PaymentForm: FC = () => {
     return budgets.map(budget => {
       return (
         <option key={budget._id} value={budget._id}>
-          {budget.title}: {budget.amount.actual.toFixed(2)} {budget.currency}
+          {budget.title}: {budget.amount.actual.toFixed(2)}{' '}
+          {budget.amount.currency}
         </option>
       );
     });
@@ -131,7 +142,7 @@ const PaymentForm: FC = () => {
       handleSubmit={handleSubmit}
       disabled={!budgets.length}
       button={false}
-      currency={selectedBudget && selectedBudget.currency}
+      currency={selectedBudget && selectedBudget.amount.currency}
       childrenBefore={
         <>
           <Label htmlFor="selectBudget">Select a budget</Label>
