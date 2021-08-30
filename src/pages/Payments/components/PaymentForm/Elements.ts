@@ -32,3 +32,9 @@ export const StyledP = styled.p<{ checked: boolean }>`
   align-items: center;
   color: ${props => `var(--color-gray${props.checked ? '-dark)' : ')'}`};
 `;
+
+export const SmallContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`;

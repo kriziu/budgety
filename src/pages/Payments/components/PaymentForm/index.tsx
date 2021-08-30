@@ -3,13 +3,15 @@ import React, { FC, useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { RootState } from '../../../../store';
 import { addTransactionAction } from '../../../../store/transactions/actions';
 import { TransactionType } from '../../../../store/transactions/types';
 import Form from '../../../../components/Form';
 import { changeTransactions } from '../../../../store/budgets/actions';
-import { Select, Container, StyledP } from './Elements';
+import { Select, Container, StyledP, SmallContainer } from './Elements';
 import { Label } from '../../../../components/Form/Elements';
 import BudgetInfo from '../../../../components/BudgetInfo';
 import { Button } from '../../../../components/Button';
@@ -35,6 +37,8 @@ const PaymentForm: FC = () => {
       every: '1',
       type: 'hours',
     });
+  const [startDate, setStartDate] = useState(new Date());
+
   let budgetsLength = useRef(-1);
 
   useEffect(() => {
@@ -158,7 +162,20 @@ const PaymentForm: FC = () => {
       pageTitle="Payments"
     >
       <>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <SmallContainer>
+          <CheckBox
+            checked={repeatTransaction.repeat}
+            onClick={handleCheckboxCheck}
+          />
+          <StyledP checked={repeatTransaction.repeat}>Select date</StyledP>
+          <DatePicker
+            selected={startDate}
+            onChange={date => setStartDate(date as Date)}
+            showTimeSelect
+            dateFormat="dd/MM/yyyy"
+          />
+        </SmallContainer>
+        <SmallContainer>
           <CheckBox
             checked={repeatTransaction.repeat}
             onClick={handleCheckboxCheck}
@@ -191,7 +208,7 @@ const PaymentForm: FC = () => {
               <option value="year">year</option>
             </Select>
           </StyledP>
-        </div>
+        </SmallContainer>
 
         {budgets[0] && (
           <Container>
