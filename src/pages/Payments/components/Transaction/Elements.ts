@@ -25,6 +25,7 @@ export const Title = styled.h1`
 export const MediumTitle = styled.h2`
   font-size: 1.6rem;
   font-weight: 500;
+  margin-bottom: 0.5rem;
   width: max-content;
 `;
 

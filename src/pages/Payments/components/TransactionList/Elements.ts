@@ -64,3 +64,16 @@ export const NoMessage = styled.h3`
   color: var(--color-gray-dark);
   opacity: 0.3;
 `;
+
+export const Line = styled.div`
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background-color: var(--color-gray-dark);
+  opacity: 0.3;
+
+  @media (min-width: ${breakpoints.laptop}) {
+    display: none;
+  }
+`;
