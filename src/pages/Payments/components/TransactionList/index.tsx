@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../../../store';
 import Transaction from '../Transaction';
-import { List, Select } from './Elements';
+import { Flex, List, NoMessage, Select } from './Elements';
 import '../../../../constant/style/animations.css';
 import { Label } from '../../../../components/Form/Elements';
 import { Container } from './Elements';
@@ -16,12 +16,21 @@ const TransactionList: FC = (): JSX.Element => {
   const [selectedBudgetId, setSelectedBudgetId] = useState('');
   const [selectedSort, setSelectedSort] = useState('date');
 
-  const renderTransactions = (): (JSX.Element | undefined)[] => {
+  const renderTransactions = (): JSX.Element[] | JSX.Element => {
     const selectedTransactions = selectedBudgetId
       ? transactions.filter(
-          transaction => transaction.budgetId === selectedBudgetId
+          transaction =>
+            transaction.budgetId === selectedBudgetId &&
+            !transaction.repeat.repeat
         )
-      : transactions;
+      : transactions.filter(transaction => !transaction.repeat.repeat);
+
+    if (!selectedTransactions.length)
+      return (
+        <CSSTransition timeout={200} classNames="slide">
+          <NoMessage>No transactions</NoMessage>
+        </CSSTransition>
+      );
 
     selectedTransactions.sort((a, b) => {
       let compare: number;
@@ -57,6 +66,29 @@ const TransactionList: FC = (): JSX.Element => {
     });
   };
 
+  const renderTransactionsRepeat = (): JSX.Element[] | JSX.Element => {
+    const selectedTransactions = transactions.filter(
+      transaction => transaction.repeat.repeat
+    );
+
+    if (!selectedTransactions.length)
+      return (
+        <CSSTransition timeout={200} classNames="slide">
+          <NoMessage>No transactions</NoMessage>
+        </CSSTransition>
+      );
+
+    return selectedTransactions.map(transaction => {
+      return (
+        <CSSTransition timeout={200} classNames="slide" key={transaction._id}>
+          <li>
+            <Transaction {...transaction} />
+          </li>
+        </CSSTransition>
+      );
+    });
+  };
+
   const renderOptions = (): JSX.Element[] => {
     return budgets.map(budget => (
       <option key={budget._id} value={budget._id}>
@@ -79,27 +111,47 @@ const TransactionList: FC = (): JSX.Element => {
   };
 
   return (
-    <Container>
-      <Label>Filter transactions</Label>
-      <Select onChange={handleSelectFilterChange} value={selectedBudgetId}>
-        <option value="">All</option>
-        {renderOptions()}
-      </Select>
-      <Label style={{ marginTop: '3rem' }}>Sort by</Label>
-      <Select onChange={handleSelectSortChange} value={selectedSort}>
-        <option value="date">Newest</option>
-        <option value="date_r">Oldest</option>
-        <option value="title">A...Z</option>
-        <option value="title_r">Z...A</option>
-        <option value="amount">Most money</option>
-        <option value="amount_r">Least money</option>
-      </Select>
-      <List>
-        <TransitionGroup component={null}>
-          {renderTransactions()}
-        </TransitionGroup>
-      </List>
-    </Container>
+    <Flex>
+      <Container>
+        <Label>Frequent transactions</Label>
+        <List>
+          <TransitionGroup component={null}>
+            {renderTransactionsRepeat()}
+          </TransitionGroup>
+        </List>
+      </Container>
+      <Container>
+        <Label htmlFor="selectbg">Filter transactions</Label>
+        <Select
+          id="selectbg"
+          onChange={handleSelectFilterChange}
+          value={selectedBudgetId}
+        >
+          <option value="">All</option>
+          {renderOptions()}
+        </Select>
+        <Label htmlFor="sort" style={{ marginTop: '3rem' }}>
+          Sort by
+        </Label>
+        <Select
+          id="sort"
+          onChange={handleSelectSortChange}
+          value={selectedSort}
+        >
+          <option value="date">Newest</option>
+          <option value="date_r">Oldest</option>
+          <option value="title">A...Z</option>
+          <option value="title_r">Z...A</option>
+          <option value="amount">Most money</option>
+          <option value="amount_r">Least money</option>
+        </Select>
+        <List>
+          <TransitionGroup component={null}>
+            {renderTransactions()}
+          </TransitionGroup>
+        </List>
+      </Container>
+    </Flex>
   );
 };
 

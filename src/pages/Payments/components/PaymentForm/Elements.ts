@@ -37,4 +37,23 @@ export const SmallContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  position: relative;
+
+  .calendar {
+    border-radius: 1.5rem;
+    border-color: var(--color-gray);
+    top: 4rem;
+    position: absolute;
+  }
+
+  button {
+    border-radius: 1rem;
+  }
+`;
+
+export const AnimatedSmallContainer = styled(SmallContainer)<{
+  animate: boolean;
+}>`
+  transition: var(--trans-default);
+  margin-top: ${props => (props.animate ? '35rem' : '0')};
 `;

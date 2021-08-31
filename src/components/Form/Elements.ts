@@ -23,7 +23,6 @@ export const Label = styled.label`
   font-size: 2.5rem;
   display: block;
   margin-bottom: 1rem;
-  width: max-content;
 `;
 
 export const Container = styled.div`
@@ -47,6 +46,7 @@ export const MinPlus = styled.div`
   width: min-content;
   position: absolute;
   background-color: var(--color-white);
+  cursor: pointer;
 `;
 
 export const MinPlusIcon = styled.div<{ minus: boolean }>`

@@ -3,15 +3,22 @@ import React, { FC, useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import Calendar from 'react-calendar';
+import { CSSTransition } from 'react-transition-group';
+import 'react-calendar/dist/Calendar.css';
 
 import { RootState } from '../../../../store';
 import { addTransactionAction } from '../../../../store/transactions/actions';
 import { TransactionType } from '../../../../store/transactions/types';
 import Form from '../../../../components/Form';
 import { changeTransactions } from '../../../../store/budgets/actions';
-import { Select, Container, StyledP, SmallContainer } from './Elements';
+import {
+  Select,
+  Container,
+  StyledP,
+  SmallContainer,
+  AnimatedSmallContainer,
+} from './Elements';
 import { Label } from '../../../../components/Form/Elements';
 import BudgetInfo from '../../../../components/BudgetInfo';
 import { Button } from '../../../../components/Button';
@@ -19,6 +26,7 @@ import { dbUrl } from '../../../../constant/routes';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 import { CheckBox } from '../../../../components/Checkbox';
 import { Input } from '../../../../components/Input';
+import '../../../../constant/style/animations.css';
 
 interface RepeatTransactionType {
   repeat: boolean;
@@ -38,6 +46,7 @@ const PaymentForm: FC = () => {
       type: 'hours',
     });
   const [startDate, setStartDate] = useState(new Date());
+  const [dateCheck, setDateCheck] = useState(false);
 
   let budgetsLength = useRef(-1);
 
@@ -67,7 +76,7 @@ const PaymentForm: FC = () => {
         ...repeatTransaction,
         every: parseInt(repeatTransaction.every),
       },
-      date: new Date(),
+      date: dateCheck ? startDate : new Date(),
     };
 
     setRepeatTransaction({
@@ -75,6 +84,9 @@ const PaymentForm: FC = () => {
       every: '1',
       type: 'hours',
     });
+
+    setDateCheck(false);
+    setStartDate(new Date());
 
     if (googleUser) {
       dispatch(setLoaderAction());
@@ -164,18 +176,25 @@ const PaymentForm: FC = () => {
       <>
         <SmallContainer>
           <CheckBox
-            checked={repeatTransaction.repeat}
-            onClick={handleCheckboxCheck}
+            checked={dateCheck}
+            onClick={() => setDateCheck(!dateCheck)}
           />
-          <StyledP checked={repeatTransaction.repeat}>Select date</StyledP>
-          <DatePicker
-            selected={startDate}
-            onChange={date => setStartDate(date as Date)}
-            showTimeSelect
-            dateFormat="dd/MM/yyyy"
-          />
+          <StyledP checked={dateCheck}>Select date</StyledP>
+
+          <CSSTransition
+            in={dateCheck}
+            timeout={200}
+            classNames="fade"
+            unmountOnExit
+          >
+            <Calendar
+              value={startDate}
+              onChange={(date: Date) => setStartDate(date)}
+              className="calendar"
+            />
+          </CSSTransition>
         </SmallContainer>
-        <SmallContainer>
+        <AnimatedSmallContainer animate={dateCheck}>
           <CheckBox
             checked={repeatTransaction.repeat}
             onClick={handleCheckboxCheck}
@@ -208,7 +227,7 @@ const PaymentForm: FC = () => {
               <option value="year">year</option>
             </Select>
           </StyledP>
-        </SmallContainer>
+        </AnimatedSmallContainer>
 
         {budgets[0] && (
           <Container>

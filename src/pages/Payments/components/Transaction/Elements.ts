@@ -22,6 +22,12 @@ export const Title = styled.h1`
   font-weight: 500;
 `;
 
+export const MediumTitle = styled.h2`
+  font-size: 1.6rem;
+  font-weight: 500;
+  width: max-content;
+`;
+
 export const SmallTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 500;

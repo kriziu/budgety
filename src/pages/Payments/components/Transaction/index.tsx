@@ -17,6 +17,7 @@ import {
   DateHeader,
   DeleteBtn,
   DeleteText,
+  MediumTitle,
   Money,
   SmallTitle,
   Title,
@@ -30,6 +31,7 @@ const Transaction: FC<TransactionType> = ({
   budgetId,
   title,
   amount,
+  repeat,
   date,
   currency,
 }): JSX.Element => {
@@ -69,23 +71,46 @@ const Transaction: FC<TransactionType> = ({
       <Container>
         <div style={{ flex: 1 }}>
           <Title>{title}</Title>
+
           {budget && <SmallTitle>{budget.title}</SmallTitle>}
+
           <DateHeader>
             {dateN.getFancyDate()} | {dateN.getFancyHours()}
           </DateHeader>
         </div>
-        <Money color={getMoneyColor(amount)}>
-          {amount} {currency}
-        </Money>
-        <div>
-          <DeleteBtn
-            color="red"
-            textColor="white"
-            onClick={() => setModalOpened(true)}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
+        >
+          {repeat.repeat && (
+            <MediumTitle>
+              Every {repeat.every} {repeat.type}
+            </MediumTitle>
+          )}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
           >
-            <CloseIcon />
-            <DeleteText>Delete</DeleteText>
-          </DeleteBtn>
+            <Money color={getMoneyColor(amount)}>
+              {amount} {currency}
+            </Money>
+
+            <div>
+              <DeleteBtn
+                color="red"
+                textColor="white"
+                onClick={() => setModalOpened(true)}
+              >
+                <CloseIcon />
+                <DeleteText>Delete</DeleteText>
+              </DeleteBtn>
+            </div>
+          </div>
         </div>
       </Container>
       {modalOpened && (

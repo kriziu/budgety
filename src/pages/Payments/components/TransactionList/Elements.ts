@@ -47,3 +47,20 @@ export const Select = styled.select`
     border-color: var(--color-blue-light);
   }
 `;
+
+export const Flex = styled.div`
+  display: block;
+
+  @media (min-width: ${breakpoints.laptop}) {
+    display: flex;
+
+    flex-direction: row;
+    align-items: flex-start;
+  }
+`;
+
+export const NoMessage = styled.h3`
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  opacity: 0.3;
+`;
