@@ -17,24 +17,30 @@ const AnimatedRouter: FC = (): JSX.Element => {
   return (
     <>
       <AllMoney />
-      <TransitionGroup component={null}>
-        <CSSTransition timeout={200} classNames="fade" key={location.key}>
-          <Switch location={location}>
-            <Route exact path="/overview">
-              <Overview />
-            </Route>
-            <Route exact path="/budgets">
-              <Budgets />
-            </Route>
-            <Route exact path="/payments">
-              <Payments />
-            </Route>
-            <Route exact path="/statistics">
-              <Statistics />
-            </Route>
-          </Switch>
-        </CSSTransition>
-      </TransitionGroup>
+      <div style={{ position: 'relative' }}>
+        <TransitionGroup component={null}>
+          <CSSTransition
+            timeout={200}
+            classNames="fade"
+            key={location.pathname}
+          >
+            <Switch location={location}>
+              <Route exact path="/overview">
+                <Overview />
+              </Route>
+              <Route exact path="/budgets">
+                <Budgets />
+              </Route>
+              <Route exact path="/payments">
+                <Payments />
+              </Route>
+              <Route exact path="/statistics">
+                <Statistics />
+              </Route>
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
     </>
   );
 };

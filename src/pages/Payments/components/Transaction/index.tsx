@@ -26,7 +26,11 @@ import { dbUrl } from '../../../../constant/routes';
 import { BudgetType } from '../../../../store/budgets/types';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 
-const Transaction: FC<TransactionType> = ({
+interface TransactionProps extends TransactionType {
+  deletable?: boolean;
+}
+
+const Transaction: FC<TransactionProps> = ({
   _id,
   budgetId,
   title,
@@ -34,6 +38,7 @@ const Transaction: FC<TransactionType> = ({
   repeat,
   date,
   currency,
+  deletable = true,
 }): JSX.Element => {
   const dispatch = useDispatch();
   const [modalOpened, setModalOpened] = useState(false);
@@ -100,16 +105,18 @@ const Transaction: FC<TransactionType> = ({
               {amount} {currency}
             </Money>
 
-            <div>
-              <DeleteBtn
-                color="red"
-                textColor="white"
-                onClick={() => setModalOpened(true)}
-              >
-                <CloseIcon />
-                <DeleteText>Delete</DeleteText>
-              </DeleteBtn>
-            </div>
+            {deletable && (
+              <div>
+                <DeleteBtn
+                  color="red"
+                  textColor="white"
+                  onClick={() => setModalOpened(true)}
+                >
+                  <CloseIcon />
+                  <DeleteText>Delete</DeleteText>
+                </DeleteBtn>
+              </div>
+            )}
           </div>
         </div>
       </Container>

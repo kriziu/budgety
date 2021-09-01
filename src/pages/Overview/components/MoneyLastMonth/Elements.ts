@@ -3,31 +3,39 @@ import { breakpoints } from '../../../../constant/style/breakpoints';
 
 export const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-end;
-  padding: 2rem 0;
+  width: 75%;
+  margin-left: 50%;
+  transform: translateX(-50%);
 
   @media (min-width: ${breakpoints.mobile}) {
-    padding: 0 8rem;
+    width: 65%;
   }
 
   @media (min-width: ${breakpoints.tablet}) {
-    padding: 0 14rem;
+    width: 50%;
   }
 
   @media (min-width: ${breakpoints.desktop}) {
-    padding: 0 24rem;
+    width: 40%;
   }
 `;
 
-export const SmContainer = styled(Container)`
+export const SmContainer = styled.div`
   padding: 0;
   flex-direction: column;
   align-items: center;
-  margin: 0 1rem;
 `;
 
-export const Header = styled.h2`
+export const BigHeader = styled.h2`
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  text-align: center;
+`;
+
+export const Header = styled.h3`
   font-size: 1.6rem;
   font-weight: 400;
   width: min-content;
@@ -35,7 +43,7 @@ export const Header = styled.h2`
 `;
 
 export const Money = styled.h2<{ color: string }>`
-  font-size: 2.2rem;
+  font-size: 2rem;
   text-align: center;
   font-weight: 500;
   color: ${props => `var(--color-${props.color})`};
