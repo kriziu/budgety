@@ -20,9 +20,11 @@ const MostValuableBudget: FC = (): JSX.Element => {
   return (
     <>
       <Header>Most valuable Budget</Header>
-      <BudgetContainer>
-        <BudgetInfo {...budget} />
-      </BudgetContainer>
+      {budget && (
+        <BudgetContainer>
+          <BudgetInfo {...budget} />
+        </BudgetContainer>
+      )}
     </>
   );
 };
