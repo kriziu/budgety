@@ -27,6 +27,7 @@ import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 import { CheckBox } from '../../../../components/Checkbox';
 import { Input } from '../../../../components/Input';
 import '../../../../constant/style/animations.css';
+import { handleEnterPressed } from '../../../../utils/utility';
 
 interface RepeatTransactionType {
   repeat: boolean;
@@ -47,6 +48,7 @@ const PaymentForm: FC = () => {
     });
   const [startDate, setStartDate] = useState(new Date());
   const [dateCheck, setDateCheck] = useState(false);
+  const check = useRef(null);
 
   let budgetsLength = useRef(-1);
 
@@ -126,11 +128,18 @@ const PaymentForm: FC = () => {
     budget => budget._id === selectedBudgetId
   )[0];
 
-  const handleCheckboxCheck = (): void => {
+  const handleCheckboxCheck = (e: React.SyntheticEvent): void => {
     setRepeatTransaction({
       ...repeatTransaction,
-      repeat: !repeatTransaction.repeat,
+      repeat: true,
     });
+
+    if (e.target === check.current) {
+      setRepeatTransaction({
+        ...repeatTransaction,
+        repeat: !repeatTransaction.repeat,
+      });
+    }
   };
 
   const handleInputRepeatChange = (
@@ -178,8 +187,14 @@ const PaymentForm: FC = () => {
           <CheckBox
             checked={dateCheck}
             onClick={() => setDateCheck(!dateCheck)}
+            tabIndex={0}
+            onKeyPress={e =>
+              handleEnterPressed(e, () => setDateCheck(!dateCheck))
+            }
           />
-          <StyledP checked={dateCheck}>Select date</StyledP>
+          <StyledP checked={dateCheck} onClick={() => setDateCheck(!dateCheck)}>
+            Select date
+          </StyledP>
 
           <CSSTransition
             in={dateCheck}
@@ -194,10 +209,15 @@ const PaymentForm: FC = () => {
             />
           </CSSTransition>
         </SmallContainer>
-        <AnimatedSmallContainer animate={dateCheck}>
+        <AnimatedSmallContainer
+          animate={dateCheck}
+          onClick={handleCheckboxCheck}
+        >
           <CheckBox
             checked={repeatTransaction.repeat}
-            onClick={handleCheckboxCheck}
+            tabIndex={0}
+            onKeyPress={e => handleEnterPressed(e, handleCheckboxCheck)}
+            ref={check}
           />
           <StyledP checked={repeatTransaction.repeat}>
             Repeat every

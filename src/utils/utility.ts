@@ -32,9 +32,9 @@ Date.prototype.getFancyHours = function (): string {
 
 export const handleEnterPressed = (
   e: React.KeyboardEvent,
-  action: () => void
+  action: (e: React.SyntheticEvent) => void
 ): void => {
-  if (e.key === 'Enter') action();
+  if (e.key === 'Enter') action(e);
 };
 
 export const timeout = (ms: number) => {
