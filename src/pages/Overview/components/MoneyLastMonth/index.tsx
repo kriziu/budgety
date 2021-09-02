@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
+
 import { useSelector } from 'react-redux';
+
 import { RootState } from '../../../../store';
 import { BigHeader, Container, Header, Money, SmContainer } from './Elements';
 

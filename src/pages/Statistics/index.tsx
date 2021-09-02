@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 const Statistics: FC = () => {
-  return <div>Statistics</div>;
+  return <h2>Coming soon</h2>;
 };
 
 export default Statistics;

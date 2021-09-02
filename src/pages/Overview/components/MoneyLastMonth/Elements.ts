@@ -30,14 +30,15 @@ export const SmContainer = styled.div`
 
 export const BigHeader = styled.h2`
   font-size: 2.2rem;
-  font-weight: 500;
   margin-top: 2rem;
+  font-weight: 500;
   text-align: center;
 `;
 
 export const Header = styled.h3`
   font-size: 1.6rem;
   font-weight: 400;
+  margin-top: 2rem;
   width: min-content;
   text-align: center;
 `;
@@ -48,4 +49,15 @@ export const Money = styled.h2<{ color: string }>`
   font-weight: 500;
   color: ${props => `var(--color-${props.color})`};
   width: min-content;
+`;
+
+export const Dash = styled.span`
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.8rem;
+  opacity: 0.5;
+  height: min-content;
+  display: inline-block;
+  background-color: var(--color-gray);
+  cursor: pointer;
 `;
