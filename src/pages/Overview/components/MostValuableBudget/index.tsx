@@ -47,7 +47,7 @@ const MostValuableBudget: FC = (): JSX.Element => {
       ) : (
         <Container>
           <NoMessage style={{ marginTop: '1.5rem' }}>
-            There is no payments
+            There is no budgets
           </NoMessage>
         </Container>
       )}
