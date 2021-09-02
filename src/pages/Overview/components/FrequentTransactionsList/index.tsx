@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import BudgetInfo from '../../../../components/BudgetInfo';
 import { RootState } from '../../../../store';
 import Transaction from '../../../Payments/components/Transaction';
 

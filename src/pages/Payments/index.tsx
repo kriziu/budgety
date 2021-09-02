@@ -5,10 +5,10 @@ import TransactionList from './components/TransactionList';
 
 const Payments: FC = () => {
   return (
-    <>
+    <div>
       <PaymentForm />
       <TransactionList />
-    </>
+    </div>
   );
 };
 

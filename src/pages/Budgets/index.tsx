@@ -5,10 +5,10 @@ import BudgetForm from './components/BudgetForm';
 
 const Budgets: FC = (): JSX.Element => {
   return (
-    <>
+    <div>
       <BudgetForm />
       <BudgetList />
-    </>
+    </div>
   );
 };
 

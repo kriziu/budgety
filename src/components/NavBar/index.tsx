@@ -30,6 +30,7 @@ import {
 import { timeout } from '../../utils/utility';
 import { addTransactionAction } from '../../store/transactions/actions';
 import { setPrimaryCurrency } from '../../store/currency/actions';
+import { useLocation } from 'react-router-dom';
 
 const NavBar: FC = (): JSX.Element => {
   const [opened, setOpened] = useState(false);
@@ -37,6 +38,7 @@ const NavBar: FC = (): JSX.Element => {
   const btnRef = useRef(null);
   const dispatch = useDispatch();
   const googleUser = useSelector((state: RootState) => state.googleUser);
+  const location = useLocation();
 
   const toggleNavMenu = (e: React.MouseEvent) => {
     setOpened(!opened);
@@ -47,17 +49,22 @@ const NavBar: FC = (): JSX.Element => {
     routes: string[],
     focusableByDefault = true
   ): JSX.Element[] => {
-    return routes.map((route, i) => (
-      <li key={i}>
-        <StyledLink
-          tabIndex={focusableByDefault ? 0 : opened ? 0 : -1}
-          onClick={toggleNavMenu}
-          to={`/${route}`}
-        >
-          {route}
-        </StyledLink>
-      </li>
-    ));
+    return routes.map((route, i) => {
+      const isActive = `/${route}` === location.pathname ? true : false;
+
+      return (
+        <li key={i}>
+          <StyledLink
+            tabIndex={focusableByDefault ? 0 : opened ? 0 : -1}
+            onClick={e => (!isActive ? toggleNavMenu(e) : e.preventDefault())}
+            to={route}
+            $isactive={isActive}
+          >
+            {route}
+          </StyledLink>
+        </li>
+      );
+    });
   };
 
   const handleResponseGoogle = (

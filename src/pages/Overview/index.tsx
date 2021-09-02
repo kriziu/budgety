@@ -6,12 +6,12 @@ import MostValuableBudget from './components/MostValuableBudget';
 
 const Overview: FC = () => {
   return (
-    <>
+    <div>
       <Header>Overview</Header>
       <MoneyLastMonth />
       <MostValuableBudget />
       <FrequentTransactionsList />
-    </>
+    </div>
   );
 };
 

@@ -163,10 +163,11 @@ export const DesktopLinksContainer = styled.ul`
   }
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)<{ $isactive: boolean }>`
   font-size: 2.5rem;
   text-decoration: none;
   text-transform: capitalize;
+  ${props => props.$isactive && 'text-decoration: underline; cursor: default;'}
 
   color: #fff;
 

@@ -16,7 +16,6 @@ export const List = styled.ul`
 `;
 
 export const Container = styled.div`
-  margin: 4rem auto;
   padding: 0 4rem;
 
   @media (min-width: ${breakpoints.mobile}) {
@@ -66,6 +65,7 @@ export const NoMessage = styled.h3`
 `;
 
 export const Line = styled.div`
+  margin: 4rem 0;
   margin-left: 50%;
   transform: translateX(-50%);
   width: 80%;
