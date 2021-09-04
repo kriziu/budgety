@@ -1,3 +1,4 @@
+import { getMultiplier } from '../../utils/utility';
 import { Constants } from './constants';
 import { BudgetsActions, BudgetsState } from './types';
 
@@ -34,37 +35,9 @@ export const budgetsReducer = (
             (transaction.amount / currency.currencies[transaction.currency]) *
             currency.currencies[budget.amount.currency];
 
-          if (transaction.repeat.repeat) {
-            const hour = 1000 * 60 * 60 * transaction.repeat.every;
-            const nowDate = new Date().getTime();
-            const transactionDate = new Date(transaction.date).getTime();
-            let multiplier = 1;
+          const multiplier = getMultiplier(transaction);
 
-            switch (transaction.repeat.type) {
-              case 'hours':
-                multiplier = Math.floor((nowDate - transactionDate) / hour);
-                break;
-              case 'days':
-                multiplier = Math.floor(
-                  (nowDate - transactionDate) / (hour * 24)
-                );
-                break;
-              case 'month':
-                multiplier = Math.floor(
-                  (nowDate - transactionDate) / (hour * 24 * 31)
-                );
-                break;
-              case 'year':
-                multiplier = Math.floor(
-                  (nowDate - transactionDate) / (hour * 24 * 365)
-                );
-                break;
-              default:
-                multiplier = 1;
-            }
-
-            money = money + money * multiplier;
-          }
+          if (transaction.repeat.repeat) money = money + money * multiplier;
 
           if (transaction.budgetId === budget._id) {
             budget = {

@@ -113,7 +113,7 @@ const TransactionList: FC = (): JSX.Element => {
   return (
     <Flex>
       <Container>
-        <Label>Frequent transactions</Label>
+        <Label>Repeated transactions</Label>
         <List>
           <TransitionGroup component={null}>
             {renderTransactionsRepeat()}

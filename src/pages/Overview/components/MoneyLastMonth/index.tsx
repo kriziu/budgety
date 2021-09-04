@@ -3,6 +3,8 @@ import { FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../../store';
+import { getMultiplier } from '../../../../utils/utility';
+import { getMoneyColor } from '../../../../utils/ux';
 import { BigHeader, Container, Header, Money, SmContainer } from './Elements';
 
 const nowDate = new Date();
@@ -21,15 +23,30 @@ const MoneyLastMonth: FC = (): JSX.Element => {
 
     transactions.forEach(transaction => {
       const transactionDate = new Date(transaction.date);
-      if (transactionDate.getMonth() === nowDate.getMonth())
+      const multiplier = getMultiplier(transaction, true);
+
+      if (
+        transactionDate.getMonth() === nowDate.getMonth() ||
+        transaction.repeat.repeat
+      )
         if (transaction.amount > 0) {
-          money.income +=
+          let amountToAdd =
             (transaction.amount / currency.currencies[transaction.currency]) *
             currency.currencies[currency.primaryCurrency];
+
+          if (transaction.repeat.repeat)
+            amountToAdd = amountToAdd + amountToAdd * multiplier;
+
+          money.income += amountToAdd;
         } else if (transaction.amount < 0) {
-          money.spent +=
+          let amountToAdd =
             (transaction.amount / currency.currencies[transaction.currency]) *
             currency.currencies[currency.primaryCurrency];
+
+          if (transaction.repeat.repeat)
+            amountToAdd = amountToAdd + amountToAdd * multiplier;
+
+          money.spent += amountToAdd;
         }
       money.total = money.income + money.spent;
     });
@@ -50,7 +67,7 @@ const MoneyLastMonth: FC = (): JSX.Element => {
 
         <SmContainer>
           <Header>Total</Header>
-          <Money color="green">
+          <Money color={getMoneyColor(moneyLastMonth.total)}>
             {moneyLastMonth.total.toFixed()} {currency.primaryCurrency}
           </Money>
         </SmContainer>

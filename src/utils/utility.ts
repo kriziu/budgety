@@ -1,4 +1,5 @@
 import React from 'react';
+import { TransactionType } from '../store/transactions/types';
 
 // PROTOTYPES
 declare global {
@@ -39,4 +40,38 @@ export const handleEnterPressed = (
 
 export const timeout = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+export const getMultiplier = (
+  transaction: TransactionType,
+  monthly: boolean = false
+): number => {
+  const hour = 1000 * 60 * 60 * transaction.repeat.every;
+  const now = new Date();
+  const nowDate = now.getTime();
+  const transactionDate = monthly
+    ? new Date(now.getFullYear(), now.getMonth(), 1).getTime()
+    : new Date(transaction.date).getTime();
+  let multiplier = 1;
+
+  if (!transaction.repeat.repeat) return 1;
+
+  switch (transaction.repeat.type) {
+    case 'hours':
+      multiplier = Math.floor((nowDate - transactionDate) / hour);
+      break;
+    case 'days':
+      multiplier = Math.floor((nowDate - transactionDate) / (hour * 24));
+      break;
+    case 'month':
+      multiplier = Math.floor((nowDate - transactionDate) / (hour * 24 * 31));
+      break;
+    case 'year':
+      multiplier = Math.floor((nowDate - transactionDate) / (hour * 24 * 365));
+      break;
+    default:
+      multiplier = 1;
+  }
+
+  return multiplier;
 };
