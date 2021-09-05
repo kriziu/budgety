@@ -29,23 +29,16 @@ import { Input } from '../../../../components/Input';
 import '../../../../constant/style/animations.css';
 import { handleEnterPressed } from '../../../../utils/utility';
 
-interface RepeatTransactionType {
-  repeat: boolean;
-  every: string;
-  type: string;
-}
-
 const PaymentForm: FC = () => {
   const dispatch = useDispatch();
   const budgets = useSelector((state: RootState) => state.budgets);
   const googleUser = useSelector((state: RootState) => state.googleUser);
   const [selectedBudgetId, setSelectedBudgetId] = useState('');
-  const [repeatTransaction, setRepeatTransaction] =
-    useState<RepeatTransactionType>({
-      repeat: false,
-      every: '1',
-      type: 'hours',
-    });
+  const [repeatTransaction, setRepeatTransaction] = useState({
+    repeat: false,
+    every: '1',
+    type: 'hours',
+  });
   const [startDate, setStartDate] = useState(new Date());
   const [dateCheck, setDateCheck] = useState(false);
   const check = useRef(null);
