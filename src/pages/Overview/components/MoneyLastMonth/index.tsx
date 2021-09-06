@@ -24,7 +24,11 @@ const MoneyLastMonth: FC = (): JSX.Element => {
 
     transactions.forEach(transaction => {
       const transactionDate = new Date(transaction.date);
-      const multiplier = getMultiplier(transaction, true);
+
+      const multiplier =
+        transactionDate.getMonth() === nowDate.getMonth()
+          ? getMultiplier(transaction)
+          : getMultiplier(transaction, true);
 
       if (
         transactionDate.getMonth() === nowDate.getMonth() ||
@@ -67,13 +71,13 @@ const MoneyLastMonth: FC = (): JSX.Element => {
         </SmContainer>
 
         <SmContainer>
-          <Header6>Income</Header6>
+          <Header6>Total</Header6>
           <Header5 $color={getMoneyColor(moneyLastMonth.total)}>
             {moneyLastMonth.total.toFixed()} {currency.primaryCurrency}
           </Header5>
         </SmContainer>
         <SmContainer>
-          <Header6>Income</Header6>
+          <Header6>Spent</Header6>
           <Header5 $color="red">
             {moneyLastMonth.spent.toFixed()} {currency.primaryCurrency}
           </Header5>

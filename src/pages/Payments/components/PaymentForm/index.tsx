@@ -155,6 +155,12 @@ const PaymentForm: FC = () => {
     setRepeatTransaction({ ...repeatTransaction, type: e.target.value });
   };
 
+  const handleDateChange = (date: Date): void => {
+    const nowDate = new Date();
+
+    if (nowDate.getTime() - date.getTime() > 0) setStartDate(date);
+  };
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -197,7 +203,7 @@ const PaymentForm: FC = () => {
           >
             <Calendar
               value={startDate}
-              onChange={(date: Date) => setStartDate(date)}
+              onChange={handleDateChange}
               className="calendar"
             />
           </CSSTransition>
