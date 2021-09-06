@@ -5,10 +5,11 @@ import { useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../../../store';
 import Transaction from '../Transaction';
-import { Flex, Line, List, NoMessage, Select } from './Elements';
+import { Flex, Line, List, Select } from './Elements';
 import '../../../../constant/style/animations.css';
-import { Label } from '../../../../components/Form/Elements';
+import { Label } from '../../../../components/Input';
 import { Container } from './Elements';
+import { NoMessage } from '../../../../components/Header';
 
 const TransactionList: FC = (): JSX.Element => {
   const transactions = useSelector((state: RootState) => state.transactions);

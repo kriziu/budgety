@@ -45,6 +45,7 @@ export const budgetsReducer = (
               amount: {
                 ...budget.amount,
                 actual: budget.amount.actual + money,
+                diff: budget.amount.actual + money - budget.amount.starting,
               },
             };
           }

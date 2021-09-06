@@ -9,7 +9,7 @@ import { setPrimaryCurrency } from '../../store/currency/actions';
 import { setLoaderAction, unsetLoaderAction } from '../../store/loader';
 import { getMoneyColor } from '../../utils/ux';
 import CurrencySelector from '../CurrencySelector';
-import { Header } from './Elements';
+import { Header2 } from '../Header';
 
 const AllMoney: FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -50,13 +50,13 @@ const AllMoney: FC = (): JSX.Element => {
   };
 
   return (
-    <Header color={getMoneyColor(money)}>
+    <Header2 $color={getMoneyColor(money)}>
       {money.toFixed(2)}{' '}
       <CurrencySelector
         color={getMoneyColor(money)}
         onChangeAction={handleCurrencyChange}
       />
-    </Header>
+    </Header2>
   );
 };
 

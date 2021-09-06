@@ -58,12 +58,6 @@ export const Flex = styled.div`
   }
 `;
 
-export const NoMessage = styled.h3`
-  font-weight: 600;
-  color: var(--color-gray-dark);
-  opacity: 0.3;
-`;
-
 export const Line = styled.div`
   margin: 4rem 0;
   margin-left: 50%;

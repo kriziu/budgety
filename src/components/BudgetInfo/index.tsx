@@ -1,26 +1,21 @@
 import { FC } from 'react';
 
-import {
-  TitleHeader,
-  MoneyHeader,
-  SmallMoneyHeader,
-  DiffSpan,
-  DiffIcon,
-} from './Elements';
+import { SmallMoneyHeader, DiffSpan, DiffIcon } from './Elements';
 import { BiCaretUp, BiCaretDown, BiMinus } from 'react-icons/bi';
 import { getMoneyColor } from '../../utils/ux';
 import { BudgetType } from '../../store/budgets/types';
+import { Header3, Header5 } from '../Header';
 
 const BudgetInfo: FC<BudgetType> = (budget): JSX.Element => {
   const { title, amount } = budget;
 
   return (
     <>
-      <TitleHeader>{title}</TitleHeader>
+      <Header3>{title}</Header3>
       <div>
-        <MoneyHeader color={getMoneyColor(amount.actual)}>
+        <Header5 $color={getMoneyColor(amount.actual)}>
           {amount.actual.toFixed(2)} {amount.currency}
-        </MoneyHeader>
+        </Header5>
         <DiffSpan color={getMoneyColor(amount.diff)}>
           <SmallMoneyHeader>
             {amount.diff.toFixed(2)} {amount.currency}

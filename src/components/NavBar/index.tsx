@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Navigation,
-  Header,
+  HeaderContainer,
   ToggleNavButton,
   NavIcon,
   MobileLinksContainer,
@@ -93,7 +93,7 @@ const NavBar: FC = (): JSX.Element => {
 
   return (
     <Navigation>
-      <Header>
+      <HeaderContainer>
         <h1 style={{ marginRight: '1rem' }}>Budgety</h1>
         {googleUser === null ? (
           <GoogleLogin
@@ -136,7 +136,7 @@ const NavBar: FC = (): JSX.Element => {
             />
           </>
         )}
-      </Header>
+      </HeaderContainer>
       <ToggleNavButton
         aria-label="Navigation button"
         onClick={toggleNavMenu}

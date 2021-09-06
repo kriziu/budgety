@@ -4,23 +4,6 @@ export interface ColorType {
   color: 'green' | 'red' | 'black';
 }
 
-export const TitleHeader = styled.h1`
-  font-size: 3rem;
-  font-weight: 400;
-  margin: 0;
-  text-align: center;
-  letter-spacing: 1px;
-`;
-
-export const MoneyHeader = styled.h2<ColorType>`
-  font-size: 2.5rem;
-  color: ${props => `var(--color-${props.color})`};
-  font-weight: 400;
-  text-align: center;
-  margin: 0;
-  margin-bottom: 0.5rem;
-`;
-
 export const DiffSpan = styled.div<ColorType>`
   font-size: 2.5rem;
   color: ${props => `var(--color-${props.color})`};

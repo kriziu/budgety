@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import BudgetInfo from '../../../../components/BudgetInfo';
+import { Header4 } from '../../../../components/Header';
 import { RootState } from '../../../../store';
 import { handleEnterPressed } from '../../../../utils/utility';
-import { NoMessage } from '../../../Payments/components/TransactionList/Elements';
+import { NoMessage } from '../../../../components/Header';
 import { Container } from '../FrequentTransactionsList/Elements';
 import { Dash } from '../MoneyLastMonth/Elements';
 
-import { BudgetContainer, Header } from './Elements';
+import { BudgetContainer } from './Elements';
 
 const MostValuableBudget: FC = (): JSX.Element => {
   const history = useHistory();
@@ -27,7 +28,7 @@ const MostValuableBudget: FC = (): JSX.Element => {
 
   return (
     <>
-      <Header>
+      <Header4 style={{ marginTop: '3rem' }}>
         Most valuable Budget{' '}
         <Dash
           tabIndex={0}
@@ -38,7 +39,7 @@ const MostValuableBudget: FC = (): JSX.Element => {
         >
           See all
         </Dash>
-      </Header>
+      </Header4>
 
       {budget ? (
         <BudgetContainer>

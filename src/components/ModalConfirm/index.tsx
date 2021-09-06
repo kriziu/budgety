@@ -1,8 +1,9 @@
 import { FC, useContext } from 'react';
 
-import { ButtonsContainer, Header } from './Elements';
+import { ButtonsContainer } from './Elements';
 import { ModalContext } from '../Modal';
 import { Button } from '../Button';
+import { Header4 } from '../Header';
 
 interface ModalConfirmProps {
   handleAction: () => void;
@@ -21,7 +22,7 @@ const ModalConfirm: FC<ModalConfirmProps> = ({ handleAction }): JSX.Element => {
 
   return (
     <div>
-      <Header>Are you sure?</Header>
+      <Header4 style={{ marginBottom: '2rem' }}>Are you sure?</Header4>
       <ButtonsContainer>
         <Button
           color="gray-dark"

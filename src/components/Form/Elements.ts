@@ -19,12 +19,6 @@ export const StyledForm = styled.form`
   }
 `;
 
-export const Label = styled.label`
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 1rem;
-`;
-
 export const Container = styled.div`
   :not(:first-child) {
     margin: 4rem 0;
@@ -70,9 +64,4 @@ export const MinPlusIcon = styled.div<{ minus: boolean }>`
     transition: var(--trans-default);
     transform: ${props => (props.minus ? `rotate(270deg)` : `rotate(0)`)};
   }
-`;
-
-export const Header = styled.h1`
-  font-weight: normal;
-  text-align: center;
 `;

@@ -19,10 +19,3 @@ export const Container = styled.ul`
     width: 40%;
   }
 `;
-
-export const Header = styled.h3`
-  font-size: 2.2rem;
-  font-weight: 500;
-  margin-top: 4rem;
-  text-align: center;
-`;

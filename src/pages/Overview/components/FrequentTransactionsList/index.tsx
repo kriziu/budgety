@@ -6,10 +6,10 @@ import { useHistory } from 'react-router-dom';
 import { RootState } from '../../../../store';
 import { handleEnterPressed } from '../../../../utils/utility';
 import Transaction from '../../../Payments/components/Transaction';
-import { NoMessage } from '../../../Payments/components/TransactionList/Elements';
+import { NoMessage } from '../../../../components/Header';
 import { Dash } from '../MoneyLastMonth/Elements';
-
-import { Container, Header } from './Elements';
+import { Header4 } from '../../../../components/Header';
+import { Container } from './Elements';
 
 const FrequentTransactionsList: FC = (): JSX.Element => {
   const history = useHistory();
@@ -32,7 +32,7 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
 
   return (
     <>
-      <Header>
+      <Header4 style={{ marginTop: '4rem' }}>
         Frequent Payments{' '}
         <Dash
           tabIndex={0}
@@ -43,7 +43,7 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
         >
           See all
         </Dash>
-      </Header>
+      </Header4>
 
       <Container>
         {' '}

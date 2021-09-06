@@ -19,7 +19,7 @@ import {
   SmallContainer,
   AnimatedSmallContainer,
 } from './Elements';
-import { Label } from '../../../../components/Form/Elements';
+import { Label } from '../../../../components/Input';
 import BudgetInfo from '../../../../components/BudgetInfo';
 import { Button } from '../../../../components/Button';
 import { dbUrl } from '../../../../constant/routes';

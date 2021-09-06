@@ -19,20 +19,9 @@ export const Navigation = styled.nav`
   position: relative;
 `;
 
-export const Header = styled.div`
+export const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
-
-  h1 {
-    font-weight: 400;
-    font-size: 3rem;
-    margin-right: 2rem;
-    display: none;
-
-    @media (min-width: ${breakpoints.tablet}) {
-      display: block;
-    }
-  }
 `;
 
 export const ToggleNavButton = styled.button`

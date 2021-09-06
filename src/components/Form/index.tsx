@@ -7,15 +7,15 @@ import { Input } from '../Input';
 import {
   Container,
   StyledForm,
-  Label,
   Warning,
   MinPlus,
   MinPlusIcon,
-  Header,
 } from './Elements';
+import { Label } from '../Input';
 import { Button } from '../Button';
 import CurrencySelector from '../CurrencySelector';
 import { RootState } from '../../store';
+import { Header2 } from '../Header';
 
 interface FormProps {
   handleSubmit: (title: string, amount: number, currency: string) => void;
@@ -147,7 +147,7 @@ const Form: FC<FormProps> = ({
     >
       {pageTitle && (
         <Container>
-          <Header>{pageTitle}</Header>
+          <Header2>{pageTitle}</Header2>
         </Container>
       )}
       {childrenBefore && <Container>{childrenBefore}</Container>}

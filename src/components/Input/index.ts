@@ -15,3 +15,9 @@ export const Input = styled.input`
     border-color: var(--color-blue-light);
   }
 `;
+
+export const Label = styled.label`
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+`;

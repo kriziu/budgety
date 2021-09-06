@@ -8,7 +8,7 @@ import Budget from '../Budget';
 import { RootState } from '../../../../store';
 import '../../../../constant/style/animations.css';
 import { Select } from '../../../Payments/components/TransactionList/Elements';
-import { Label } from '../../../../components/Form/Elements';
+import { Label } from '../../../../components/Input';
 
 const BudgetList: FC = (): JSX.Element => {
   const budgets = useSelector((state: RootState) => state.budgets);
@@ -61,8 +61,14 @@ const BudgetList: FC = (): JSX.Element => {
 
   return (
     <Container>
-      <Label style={{ marginTop: '3rem' }}>Sort by</Label>
-      <Select onChange={handleSelectSortChange} value={selectedSort}>
+      <Label htmlFor="sortBy" style={{ marginTop: '3rem' }}>
+        Sort by
+      </Label>
+      <Select
+        id="sortBy"
+        onChange={handleSelectSortChange}
+        value={selectedSort}
+      >
         <option value="date">Newest</option>
         <option value="date_r">Oldest</option>
         <option value="title">A...Z</option>

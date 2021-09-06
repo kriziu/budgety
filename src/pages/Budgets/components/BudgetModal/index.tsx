@@ -3,7 +3,7 @@ import { FC, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
-import { Top, Header, IconSpan, ButtonsContainer } from './Elements';
+import { Top, IconSpan, ButtonsContainer } from './Elements';
 import { BiEdit, BiX } from 'react-icons/bi';
 import { ModalContext } from '../../../../components/Modal';
 import { BudgetType } from '../../../../store/budgets/types';
@@ -19,6 +19,7 @@ import Form from '../../../../components/Form';
 import { RootState } from '../../../../store';
 import { dbUrl } from '../../../../constant/routes';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
+import { Header3 } from '../../../../components/Header';
 
 const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
         <IconSpan tabIndex={0}>
           <BiEdit />
         </IconSpan>
-        <Header>Edit</Header>
+        <Header3>Edit</Header3>
         <IconSpan
           tabIndex={0}
           style={{ fontSize: '3.5rem', height: '4.5rem' }}

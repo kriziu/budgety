@@ -1,11 +1,12 @@
 import { FC, useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
+import { Header4, Header5, Header6 } from '../../../../components/Header';
 
 import { RootState } from '../../../../store';
 import { getMultiplier } from '../../../../utils/utility';
 import { getMoneyColor } from '../../../../utils/ux';
-import { BigHeader, Container, Header, Money, SmContainer } from './Elements';
+import { Container, SmContainer } from './Elements';
 
 const nowDate = new Date();
 
@@ -56,26 +57,26 @@ const MoneyLastMonth: FC = (): JSX.Element => {
 
   return (
     <>
-      <BigHeader>Outgoings last month</BigHeader>
+      <Header4 style={{ marginTop: '2rem' }}>Outgoings last month</Header4>
       <Container>
         <SmContainer>
-          <Header>Income</Header>
-          <Money color="green">
+          <Header6>Income</Header6>
+          <Header5 $color="green">
             {moneyLastMonth.income.toFixed()} {currency.primaryCurrency}
-          </Money>
+          </Header5>
         </SmContainer>
 
         <SmContainer>
-          <Header>Total</Header>
-          <Money color={getMoneyColor(moneyLastMonth.total)}>
+          <Header6>Income</Header6>
+          <Header5 $color={getMoneyColor(moneyLastMonth.total)}>
             {moneyLastMonth.total.toFixed()} {currency.primaryCurrency}
-          </Money>
+          </Header5>
         </SmContainer>
         <SmContainer>
-          <Header>Spent</Header>
-          <Money color="red">
+          <Header6>Income</Header6>
+          <Header5 $color="red">
             {moneyLastMonth.spent.toFixed()} {currency.primaryCurrency}
-          </Money>
+          </Header5>
         </SmContainer>
       </Container>
     </>

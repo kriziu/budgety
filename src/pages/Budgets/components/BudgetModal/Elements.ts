@@ -6,11 +6,6 @@ export const Top = styled.div`
   justify-content: space-between;
 `;
 
-export const Header = styled.h1`
-  font-weight: 400;
-  font-size: 2.8rem;
-`;
-
 export const IconSpan = styled.span`
   font-size: 3rem;
   height: 4rem;
