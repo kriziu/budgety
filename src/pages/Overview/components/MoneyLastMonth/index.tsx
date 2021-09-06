@@ -57,7 +57,7 @@ const MoneyLastMonth: FC = (): JSX.Element => {
 
   return (
     <>
-      <Header4 style={{ marginTop: '2rem' }}>Outgoings last month</Header4>
+      <Header4 style={{ marginTop: '4rem' }}>Outgoings last month</Header4>
       <Container>
         <SmContainer>
           <Header6>Income</Header6>

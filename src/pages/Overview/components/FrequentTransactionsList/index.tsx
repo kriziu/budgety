@@ -32,7 +32,7 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
 
   return (
     <>
-      <Header4 style={{ marginTop: '4rem' }}>
+      <Header4 style={{ marginTop: '8rem' }}>
         Frequent Payments{' '}
         <Dash
           tabIndex={0}

@@ -28,7 +28,7 @@ const MostValuableBudget: FC = (): JSX.Element => {
 
   return (
     <>
-      <Header4 style={{ marginTop: '3rem' }}>
+      <Header4 style={{ marginTop: '6rem' }}>
         Most valuable Budget{' '}
         <Dash
           tabIndex={0}
