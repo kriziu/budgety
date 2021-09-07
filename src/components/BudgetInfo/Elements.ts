@@ -6,7 +6,8 @@ export interface ColorType {
 
 export const DiffSpan = styled.div<ColorType>`
   font-size: 2.5rem;
-  color: ${props => `var(--color-${props.color})`};
+  color: ${props =>
+    props.color === 'black' ? props.theme.text : `var(--color-${props.color})`};
   font-weight: 400;
   text-align: center;
   margin-left: 0;

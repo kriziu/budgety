@@ -224,7 +224,6 @@ const PaymentForm: FC = () => {
               style={{
                 width: '4rem',
                 padding: '.5rem',
-                color: !repeatTransaction.repeat ? 'lightgray' : 'black',
               }}
               onChange={handleInputRepeatChange}
               maxLength={3}

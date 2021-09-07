@@ -181,7 +181,7 @@ export const StyledLink = styled(Link)<{ $isactive: boolean }>`
   }
 
   @media (min-width: ${breakpoints.tablet}) {
-    color: #222;
+    color: ${({ theme }) => theme.text};
     font-size: 1.6rem;
   }
 

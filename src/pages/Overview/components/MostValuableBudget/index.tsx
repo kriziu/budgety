@@ -9,7 +9,7 @@ import { RootState } from '../../../../store';
 import { handleEnterPressed } from '../../../../utils/utility';
 import { NoMessage } from '../../../../components/Header';
 import { Container } from '../FrequentTransactionsList/Elements';
-import { Dash } from '../MoneyLastMonth/Elements';
+import { Dash } from '../../../../components/Dash';
 
 import { BudgetContainer } from './Elements';
 

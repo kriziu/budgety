@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const CheckBox = styled.div<{ checked: boolean }>`
   width: 2.6rem;
   height: 2.6rem;
-  border: 1px solid var(--color-gray-dark);
+  border: 1px solid ${({ theme }) => theme.text};
   display: inline-block;
   border-radius: 50%;
   position: relative;
@@ -14,8 +14,8 @@ export const CheckBox = styled.div<{ checked: boolean }>`
     display: block;
     width: 1.6rem;
     height: 1.6rem;
-    background-color: ${props =>
-      `var(--color-${props.checked ? 'gray-dark)' : 'white)'}`};
+    background-color: ${({ theme }) => theme.text};
+    opacity: ${({ checked }) => (checked ? 1 : 0)};
     border-radius: 50%;
     position: absolute;
     top: 50%;

@@ -7,7 +7,7 @@ import { RootState } from '../../../../store';
 import { handleEnterPressed } from '../../../../utils/utility';
 import Transaction from '../../../Payments/components/Transaction';
 import { NoMessage } from '../../../../components/Header';
-import { Dash } from '../MoneyLastMonth/Elements';
+import { Dash } from '../../../../components/Dash';
 import { Header4 } from '../../../../components/Header';
 import { Container } from './Elements';
 

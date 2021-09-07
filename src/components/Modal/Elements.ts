@@ -17,7 +17,7 @@ export const Container = styled.div`
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 21;
-  background-color: var(--color-white);
+  background-color: ${({ theme }) => theme.body};
   width: 75%;
   padding: 2rem 2rem;
   border-radius: 1rem;

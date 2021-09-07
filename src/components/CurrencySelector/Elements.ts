@@ -8,7 +8,10 @@ export const Select = styled.select<{ color: string }>`
   font-size: 3rem;
   background-color: var(--color-white);
   font-family: inherit;
-  color: ${props => `var(--color-${props.color})`};
+  color: ${props =>
+    props.color === 'black'
+      ? props.theme.text
+      : `var(--color-${props.color})`} !important;
 
   :focus {
     outline: none;

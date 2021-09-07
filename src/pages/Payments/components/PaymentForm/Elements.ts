@@ -30,7 +30,8 @@ export const StyledP = styled.p<{ checked: boolean }>`
   transition: var(--trans-default);
   display: flex;
   align-items: center;
-  color: ${props => `var(--color-gray${props.checked ? '-dark)' : ')'}`};
+  color: ${({ theme }) => theme.text};
+  opacity: ${({ checked }) => (checked ? 1 : 0.2)};
 `;
 
 export const SmallContainer = styled.div`

@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useRef } from 'react';
 
 import { HashRouter as Router } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from './GlobalStyles';
 import NavBar from './NavBar';
@@ -24,6 +24,7 @@ import { dbAPI } from '../api/db';
 import Modal from './Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { setLoaderAction, unsetLoaderAction } from '../store/loader';
+import { darkTheme, lightTheme } from './Theme';
 
 const Container = styled.div`
   width: 100vw;
@@ -84,7 +85,7 @@ const App: FC = (): JSX.Element => {
   }, [currencyFromState, dispatch]);
 
   return (
-    <>
+    <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
       <Container>
         <Router>
@@ -99,7 +100,7 @@ const App: FC = (): JSX.Element => {
           <ClipLoader size="8rem" color="silver" />
         </Modal>
       )}
-    </>
+    </ThemeProvider>
   );
 };
 

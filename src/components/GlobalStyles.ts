@@ -1,5 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    body: string;
+    text: string;
+    border: string;
+    background: string;
+  }
+}
+
 const GlobalStyle = createGlobalStyle`
   *,
   *::after,
@@ -9,14 +18,28 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  select {
+    background-color: ${({ theme }) => theme.background} !important;
+    border: 1px solid ${({ theme }) => theme.border} !important;
+    color: ${({ theme }) => theme.text} !important;
+
+    :focus {
+    outline: none;
+    border-color: var(--color-blue-light) !important;
+  }
+  }
+
+
   body {
     margin: 0;
     padding: 0;
     font-size: 1.6rem;
     font-family: Roboto;
     box-sizing: border-box;
+    background-color: ${({ theme }) => theme.body};
 
-    color: var(--color-black)
+    color: ${({ theme }) => theme.text};
+    transition: all .3s;
   }
 
   html {

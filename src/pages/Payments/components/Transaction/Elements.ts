@@ -32,14 +32,12 @@ export const MediumTitle = styled.h2`
 export const SmallTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--color-gray-dark);
   opacity: 0.9;
 `;
 
 export const DateHeader = styled.h3`
   font-size: 1.3rem;
   font-weight: 500;
-  color: var(--color-gray-dark);
   opacity: 0.8;
 `;
 

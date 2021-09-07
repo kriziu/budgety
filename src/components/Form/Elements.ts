@@ -34,12 +34,12 @@ export const Warning = styled.p`
 
 export const MinPlus = styled.div`
   padding: 1.83rem 1.5rem;
-  border: 1px solid var(--color-gray);
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 1rem;
   font-size: 1.6rem;
   width: min-content;
   position: absolute;
-  background-color: var(--color-white);
+  background-color: ${({ theme }) => theme.background};
   cursor: pointer;
 `;
 
