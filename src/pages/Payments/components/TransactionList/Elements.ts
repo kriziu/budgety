@@ -17,11 +17,11 @@ export const List = styled.ul`
 
 export const Container = styled.div`
   padding: 0 4rem;
-  margin-left: 50%;
-  transform: translateX(-50%);
 
   @media (min-width: ${breakpoints.mobile}) {
     width: 80%;
+    margin-left: 50%;
+    transform: translateX(-50%);
   }
 
   @media (min-width: ${breakpoints.tablet}) {
