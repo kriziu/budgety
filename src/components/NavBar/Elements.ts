@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { breakpoints } from '../../constant/style/breakpoints';
 import { Button } from '../Button';
+import ThemeChanger from '../ThemeChanger';
 
 interface NavProps {
   opened?: boolean;
@@ -28,8 +29,9 @@ export const HeaderContainer = styled.div`
     font-size: 3rem;
     margin-right: 2rem;
     display: none;
+    color: ${({ theme }) => theme.text};
 
-    @media (min-width: ${breakpoints.tablet}) {
+    @media (min-width: ${breakpoints.laptop}) {
       display: block;
     }
   }
@@ -208,5 +210,20 @@ export const GoogleButton = styled(Button)`
 
   svg {
     margin-right: 0.5rem;
+  }
+`;
+
+export const StyledThemeChanger = styled.span`
+  position: absolute;
+  top: 3.5rem;
+  left: 3.5rem;
+`;
+
+export const StyledThemeChangerDesktop = styled.span`
+  display: none;
+  margin-left: 2rem;
+
+  @media (min-width: ${breakpoints.tablet}) {
+    display: block;
   }
 `;

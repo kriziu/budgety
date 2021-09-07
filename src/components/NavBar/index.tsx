@@ -17,6 +17,8 @@ import {
   DesktopLinksContainer,
   Avatar,
   GoogleButton,
+  StyledThemeChanger,
+  StyledThemeChangerDesktop,
 } from './Elements';
 import { FaGoogle } from 'react-icons/fa';
 import { routes } from '../../constant/routes';
@@ -31,6 +33,7 @@ import { timeout } from '../../utils/utility';
 import { addTransactionAction } from '../../store/transactions/actions';
 import { setPrimaryCurrency } from '../../store/currency/actions';
 import { useLocation } from 'react-router-dom';
+import ThemeChanger from '../ThemeChanger';
 
 const NavBar: FC = (): JSX.Element => {
   const [opened, setOpened] = useState(false);
@@ -134,6 +137,9 @@ const NavBar: FC = (): JSX.Element => {
                 </GoogleButton>
               )}
             />
+            <StyledThemeChangerDesktop>
+              <ThemeChanger />
+            </StyledThemeChangerDesktop>
           </>
         )}
       </HeaderContainer>
@@ -147,6 +153,9 @@ const NavBar: FC = (): JSX.Element => {
         <NavIcon opened={opened} focused={btnFocused} />
       </ToggleNavButton>
       <MobileLinksContainer opened={opened}>
+        <StyledThemeChanger>
+          <ThemeChanger />
+        </StyledThemeChanger>
         <ul>{renderLinks(routes, false)}</ul>
       </MobileLinksContainer>
       <DesktopLinksContainer>{renderLinks(routes)}</DesktopLinksContainer>

@@ -42,6 +42,10 @@ const App: FC = (): JSX.Element => {
   const currencyFromState = useSelector((state: RootState) => state.currency);
   const firstRender = useRef(true);
   const loader = useSelector((state: RootState) => state.loader);
+  const theme =
+    useSelector((state: RootState) => state.theme) === 'light'
+      ? lightTheme
+      : darkTheme;
 
   const setLoader = useCallback(() => dispatch(setLoaderAction()), [dispatch]);
   const unsetLoader = useCallback(
@@ -85,7 +89,7 @@ const App: FC = (): JSX.Element => {
   }, [currencyFromState, dispatch]);
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Container>
         <Router>
