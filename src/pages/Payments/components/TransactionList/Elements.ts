@@ -17,6 +17,8 @@ export const List = styled.ul`
 
 export const Container = styled.div`
   padding: 0 4rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
 
   @media (min-width: ${breakpoints.mobile}) {
     width: 80%;
@@ -24,6 +26,11 @@ export const Container = styled.div`
 
   @media (min-width: ${breakpoints.tablet}) {
     width: 60%;
+  }
+
+  @media (min-width: ${breakpoints.laptop}) {
+    margin-left: 0;
+    transform: translateX(0);
   }
 
   @media (min-width: ${breakpoints.desktop}) {

@@ -50,7 +50,7 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
   };
 
   return (
-    <>
+    <div>
       <div>
         <Header4 style={{ marginTop: '8rem' }}>
           Repeat Payments{' '}
@@ -100,7 +100,7 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
           )}
         </Container>
       </div>
-    </>
+    </div>
   );
 };
 

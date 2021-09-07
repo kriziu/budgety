@@ -15,7 +15,7 @@ export const Container = styled.ul`
     width: 50%;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
-    width: 40%;
+  @media (min-width: ${breakpoints.laptop}) {
+    width: 100%;
   }
 `;
