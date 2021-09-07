@@ -60,26 +60,28 @@ const BudgetList: FC = (): JSX.Element => {
   };
 
   return (
-    <Container>
-      <Label htmlFor="sortBy" style={{ marginTop: '3rem' }}>
-        Sort by
-      </Label>
-      <Select
-        id="sortBy"
-        onChange={handleSelectSortChange}
-        value={selectedSort}
-      >
-        <option value="date">Newest</option>
-        <option value="date_r">Oldest</option>
-        <option value="title">A...Z</option>
-        <option value="title_r">Z...A</option>
-        <option value="amount">Most money</option>
-        <option value="amount_r">Least money</option>
-      </Select>
+    <>
+      <Container>
+        <Label htmlFor="sortBy" style={{ marginTop: '3rem' }}>
+          Sort by
+        </Label>
+        <Select
+          id="sortBy"
+          onChange={handleSelectSortChange}
+          value={selectedSort}
+        >
+          <option value="date">Newest</option>
+          <option value="date_r">Oldest</option>
+          <option value="title">A...Z</option>
+          <option value="title_r">Z...A</option>
+          <option value="amount">Most money</option>
+          <option value="amount_r">Least money</option>
+        </Select>
+      </Container>
       <StyledList>
         <TransitionGroup component={null}>{renderBudgets()}</TransitionGroup>
       </StyledList>
-    </Container>
+    </>
   );
 };
 

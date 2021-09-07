@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { breakpoints } from '../../constant/style/breakpoints';
 import { Button } from '../Button';
-import ThemeChanger from '../ThemeChanger';
 
 interface NavProps {
   opened?: boolean;

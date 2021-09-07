@@ -11,6 +11,10 @@ export const StyledList = styled.ul`
   padding: 0 4rem;
   align-items: center;
 
+  @media (min-width: ${breakpoints.mobile}) {
+    padding: 0 8rem;
+  }
+
   display: grid;
 `;
 

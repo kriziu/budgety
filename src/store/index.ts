@@ -58,6 +58,11 @@ store.subscribe((): void => {
       transactions,
       googleUser: null,
     });
+  else {
+    const localState = loadState();
+
+    localState && saveState({ ...localState, theme: state.theme });
+  }
 });
 
 export default store;

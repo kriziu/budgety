@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { breakpoints } from '../../../../constant/style/breakpoints';
 
 export const BudgetContainer = styled.div`
   margin-top: 2rem;

@@ -147,11 +147,11 @@ const NavBar: FC = (): JSX.Element => {
                 </GoogleButton>
               )}
             />
-            <StyledThemeChangerDesktop>
-              <ThemeChanger />
-            </StyledThemeChangerDesktop>
           </>
         )}
+        <StyledThemeChangerDesktop>
+          <ThemeChanger />
+        </StyledThemeChangerDesktop>
       </HeaderContainer>
       <ToggleNavButton
         aria-label="Navigation button"
