@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef } from 'react';
 
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from './GlobalStyles';
@@ -25,6 +25,7 @@ import Modal from './Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { setLoaderAction, unsetLoaderAction } from '../store/loader';
 import { darkTheme, lightTheme } from './Theme';
+import { routes } from '../constant/routes';
 
 const Container = styled.div`
   width: 100vw;

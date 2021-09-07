@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 
 import GoogleLogin, {
   GoogleLoginResponse,
@@ -32,7 +32,7 @@ import {
 import { timeout } from '../../utils/utility';
 import { addTransactionAction } from '../../store/transactions/actions';
 import { setPrimaryCurrency } from '../../store/currency/actions';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ThemeChanger from '../ThemeChanger';
 
 const NavBar: FC = (): JSX.Element => {
@@ -42,6 +42,16 @@ const NavBar: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const googleUser = useSelector((state: RootState) => state.googleUser);
   const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    let goodLocation = false;
+
+    routes.forEach(route => {
+      if (`/${route}` === location.pathname) goodLocation = true;
+    });
+    if (!goodLocation) history.push('/overview');
+  });
 
   const toggleNavMenu = (e: React.MouseEvent) => {
     setOpened(!opened);
