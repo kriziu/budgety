@@ -1,13 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { Select } from './Elements';
+import { Container, StyledSelect } from './Elements';
 
 interface CurrencySelectorProps {
   color: string;
-  onChangeAction: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChangeAction: (e: string) => void;
   style?: { [key: string]: string };
   currency?: string;
+  container?: boolean;
 }
 
 const CurrencySelector: FC<CurrencySelectorProps> = ({
@@ -15,6 +16,7 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
   onChangeAction,
   style,
   currency,
+  container = true,
 }): JSX.Element => {
   const currencies = useSelector(
     (state: RootState) => state.currency.currencies
@@ -33,32 +35,29 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
     !currency && setCurrentCurrency(primaryCurrency);
   }, [primaryCurrency, currency]);
 
-  const renderCurrenciesOptions = (): JSX.Element[] => {
-    return Object.entries(currencies).map(currency => {
-      return (
-        <option value={currency[0]} key={currency[0]}>
-          {currency[0]}
-        </option>
-      );
-    });
+  const currenciesHeaders = Object.entries(currencies).map(currency => {
+    return { value: currency[0], label: currency[0] };
+  });
+
+  const handleSelectChange = (e: { label: string; value: string }): void => {
+    setCurrentCurrency(e.value);
+    onChangeAction(e.value);
   };
 
-  const handleSelectChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setCurrentCurrency(e.target.value);
-    onChangeAction(e);
+  const renderSelect = (): JSX.Element => {
+    return (
+      <StyledSelect
+        options={currenciesHeaders}
+        classNamePrefix="Select"
+        color={color}
+        value={{ value: currentCurrency, label: currentCurrency }}
+        onChange={handleSelectChange}
+      />
+    );
   };
 
   return (
-    <Select
-      color={color}
-      onChange={handleSelectChange}
-      value={currentCurrency}
-      style={style}
-    >
-      {renderCurrenciesOptions()}
-    </Select>
+    <>{container ? <Container>{renderSelect()}</Container> : renderSelect()}</>
   );
 };
 

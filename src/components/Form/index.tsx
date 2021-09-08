@@ -121,8 +121,8 @@ const Form: FC<FormProps> = ({
     }
   };
 
-  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormCurrency(e.target.value);
+  const handleCurrencyChange = (e: string) => {
+    setFormCurrency(e);
   };
 
   const handleInputChangeNew = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,12 +177,22 @@ const Form: FC<FormProps> = ({
           onChange={handleInputChangeNew}
           style={{ padding: '1rem 5rem' }}
         />
-        <CurrencySelector
-          color="black"
-          onChangeAction={handleCurrencyChange}
-          style={{ fontSize: '2.85rem', position: 'absolute', right: '0' }}
-          currency={formCurrency}
-        />
+        <div
+          style={{
+            display: 'inline-block',
+            width: '10rem',
+            fontSize: '2rem',
+            position: 'absolute',
+            right: '0',
+          }}
+        >
+          <CurrencySelector
+            color="black"
+            onChangeAction={handleCurrencyChange}
+            currency={formCurrency}
+            container={false}
+          />
+        </div>
         {!amount.checked && <Warning>Fill out this field!</Warning>}
       </Container>
       <Container>{children}</Container>

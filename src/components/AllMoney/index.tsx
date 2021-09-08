@@ -32,21 +32,19 @@ const AllMoney: FC = (): JSX.Element => {
   money =
     (money / currency.currencies['USD']) * currency.currencies[primaryCurrency];
 
-  const handleCurrencyChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
+  const handleCurrencyChange = (e: string): void => {
     if (googleId) {
       dispatch(setLoaderAction());
 
       axios
         .patch(`${dbUrl}/users/${googleId}`, {
-          currency: e.target.value,
+          currency: e,
         })
         .then(() => {
-          dispatch(setPrimaryCurrency(e.target.value));
+          dispatch(setPrimaryCurrency(e));
           dispatch(unsetLoaderAction());
         });
-    } else dispatch(setPrimaryCurrency(e.target.value));
+    } else dispatch(setPrimaryCurrency(e));
   };
 
   return (
