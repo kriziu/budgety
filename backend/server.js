@@ -5,8 +5,10 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8080;
 
+const { DB_PASS } = process.env;
+
 mongoose.connect(
-  'mongodb+srv://root:TFvJiWgCq3K7TvRa@cluster0.jghn2.mongodb.net/Cluster0?retryWrites=true&w=majority',
+  `mongodb+srv://root:${DB_PASS}@cluster0.jghn2.mongodb.net/Cluster0?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
