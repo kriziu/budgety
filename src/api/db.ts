@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GoogleLoginResponse } from 'react-google-login';
-import { dbUrl } from '../constant/routes';
 import { BudgetType } from '../store/budgets/types';
+import { CurrencyType } from '../store/currency/types';
 import { TransactionType } from '../store/transactions/types';
 
 interface ReturnResponseType {
@@ -10,7 +10,9 @@ interface ReturnResponseType {
   userCurrency: string;
 }
 
-export const dbAPI = async (
+const { REACT_APP_SERVER_URL } = process.env;
+
+export const fetchUserData = async (
   googleUser: GoogleLoginResponse['profileObj'],
   setLoading: () => void,
   unsetLoading: () => void
@@ -18,7 +20,7 @@ export const dbAPI = async (
   setLoading();
 
   let budgets: BudgetType[] = await (
-    await axios.get(`${dbUrl}/budgets`, {
+    await axios.get(`${REACT_APP_SERVER_URL}/budgets`, {
       params: {
         userId: googleUser?.googleId,
       },
@@ -26,7 +28,7 @@ export const dbAPI = async (
   ).data;
 
   let transactions: TransactionType[] = await (
-    await axios.get(`${dbUrl}/transactions`, {
+    await axios.get(`${REACT_APP_SERVER_URL}/transactions`, {
       params: {
         userId: googleUser?.googleId,
       },
@@ -36,12 +38,12 @@ export const dbAPI = async (
   let userCurrency: string = '';
 
   await axios
-    .get(`${dbUrl}/users/${googleUser?.googleId}`)
+    .get(`${REACT_APP_SERVER_URL}/users/${googleUser?.googleId}`)
     .then(res => {
       userCurrency = res.data.currency;
     })
     .catch(() => {
-      axios.post(`${dbUrl}/users`, {
+      axios.post(`${REACT_APP_SERVER_URL}/users`, {
         _id: googleUser?.googleId,
         currency: 'USD',
       });
@@ -59,4 +61,31 @@ export const dbAPI = async (
 
   unsetLoading();
   return { budgets, transactions, userCurrency };
+};
+
+export const fetchExchangeRates = async (
+  primaryCurrency: string
+): Promise<CurrencyType> => {
+  interface rate {
+    [key: string]: number;
+  }
+
+  interface dataFetchedType {
+    rates: rate;
+    source: string;
+    date: string;
+    timestamp: number;
+  }
+
+  const currencies: dataFetchedType = await (
+    await axios.get(`${REACT_APP_SERVER_URL}/currency`)
+  ).data;
+
+  const currency: CurrencyType = {
+    source: currencies.source,
+    currencies: currencies.rates,
+    primaryCurrency: primaryCurrency,
+  };
+
+  return currency;
 };

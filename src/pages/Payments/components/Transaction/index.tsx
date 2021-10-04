@@ -22,13 +22,14 @@ import {
   SmallTitle,
   Title,
 } from './Elements';
-import { dbUrl } from '../../../../constant/routes';
 import { BudgetType } from '../../../../store/budgets/types';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 
 interface TransactionProps extends TransactionType {
   deletable?: boolean;
 }
+
+const { REACT_APP_SERVER_URL } = process.env;
 
 const Transaction: FC<TransactionProps> = ({
   _id,
@@ -60,7 +61,7 @@ const Transaction: FC<TransactionProps> = ({
   const handleDeleteTransaction = (): void => {
     if (googleUser) {
       dispatch(setLoaderAction());
-      axios.delete(`${dbUrl}/transactions/${_id}`).then(() => {
+      axios.delete(`${REACT_APP_SERVER_URL}/transactions/${_id}`).then(() => {
         dispatch(removeTransactionAction(_id));
         dispatch(changeTransactions());
         dispatch(unsetLoaderAction());

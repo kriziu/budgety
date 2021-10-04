@@ -3,7 +3,6 @@ import { CurrencyActions, CurrencyType } from './types';
 
 export const currencyReducer = (
   state: CurrencyType = {
-    dateFetched: new Date(0),
     source: 'USD',
     currencies: {},
     primaryCurrency: 'USD',

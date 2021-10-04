@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import { Header2 } from '../../components/Header';
-import { breakpoints } from '../../constant/style/breakpoints';
+import { breakpoints } from '../../style/breakpoints';
 import FrequentTransactionsList from './components/FrequentTransactionsList';
 import MoneyLastMonth from './components/MoneyLastMonth';
 import MostValuableBudget from './components/MostValuableBudget';

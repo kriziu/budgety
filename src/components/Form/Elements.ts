@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { breakpoints } from '../../constant/style/breakpoints';
+import { breakpoints } from '../../style/breakpoints';
 
 export const StyledForm = styled.form`
   margin: 5rem auto;

@@ -2,7 +2,7 @@ import { BiX } from 'react-icons/bi';
 import styled from 'styled-components';
 import { ColorType } from '../../../../components/BudgetInfo/Elements';
 import { Button } from '../../../../components/Button';
-import { breakpoints } from '../../../../constant/style/breakpoints';
+import { breakpoints } from '../../../../style/breakpoints';
 
 export const Container = styled.div`
   display: flex;

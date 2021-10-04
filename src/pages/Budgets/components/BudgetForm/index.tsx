@@ -8,8 +8,9 @@ import { RootState } from '../../../../store';
 import { addBudgetAction } from '../../../../store/budgets/actions';
 import { BudgetType } from '../../../../store/budgets/types';
 import Form from '../../../../components/Form';
-import { dbUrl } from '../../../../constant/routes';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
+
+const { REACT_APP_SERVER_URL } = process.env;
 
 const BudgetForm: FC = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const BudgetForm: FC = () => {
       dispatch(setLoaderAction());
 
       axios
-        .post(`${dbUrl}/budgets`, {
+        .post(`${REACT_APP_SERVER_URL}/budgets`, {
           ...newBudget,
         })
         .then(budget => {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { breakpoints } from '../../constant/style/breakpoints';
+import { breakpoints } from '../../style/breakpoints';
 
 export const Background = styled.div<{ animating: boolean }>`
   position: fixed;

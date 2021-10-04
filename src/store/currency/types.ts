@@ -6,7 +6,6 @@ export interface multiplier {
 }
 
 export interface CurrencyType {
-  dateFetched: Date;
   source: String;
   currencies: multiplier;
   primaryCurrency: string;

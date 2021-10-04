@@ -8,7 +8,7 @@ import Budgets from '../pages/Budgets';
 import Payments from '../pages/Payments';
 import Statistics from '../pages/Statistics';
 
-import '../constant/style/animations.css';
+import '../style/animations.css';
 import AllMoney from './AllMoney';
 
 const AnimatedRouter: FC = (): JSX.Element => {

@@ -22,12 +22,13 @@ import {
 import { Label } from '../../../../components/Input';
 import BudgetInfo from '../../../../components/BudgetInfo';
 import { Button } from '../../../../components/Button';
-import { dbUrl } from '../../../../constant/routes';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 import { CheckBox } from '../../../../components/Checkbox';
 import { Input } from '../../../../components/Input';
-import '../../../../constant/style/animations.css';
+import '../../../../style/animations.css';
 import { handleEnterPressed } from '../../../../utils/utility';
+
+const { REACT_APP_SERVER_URL } = process.env;
 
 const PaymentForm: FC = () => {
   const dispatch = useDispatch();
@@ -86,7 +87,7 @@ const PaymentForm: FC = () => {
     if (googleUser) {
       dispatch(setLoaderAction());
       axios
-        .post(`${dbUrl}/transactions`, {
+        .post(`${REACT_APP_SERVER_URL}/transactions`, {
           ...newTransaction,
         })
         .then(transaction => {

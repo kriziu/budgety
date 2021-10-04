@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from './GlobalStyles';
 import NavBar from './NavBar';
-import { breakpoints } from '../constant/style/breakpoints';
+import { breakpoints } from '../style/breakpoints';
 import AnimatedRouter from './AnimatedRouter';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -19,8 +19,7 @@ import {
   removeAllTransactionsAction,
 } from '../store/transactions/actions';
 import { setPrimaryCurrency, updateCurrency } from '../store/currency/actions';
-import { currencyExchangeAPI } from '../api/currencyExchange';
-import { dbAPI } from '../api/db';
+import { fetchExchangeRates, fetchUserData } from '../api/db';
 import Modal from './Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { setLoaderAction, unsetLoaderAction } from '../store/loader';
@@ -39,7 +38,9 @@ const Container = styled.div`
 const App: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const googleUser = useSelector((state: RootState) => state.googleUser);
-  const currencyFromState = useSelector((state: RootState) => state.currency);
+  const primaryCurrency = useSelector(
+    (state: RootState) => state.currency.primaryCurrency
+  );
   const firstRender = useRef(true);
   const loader = useSelector((state: RootState) => state.loader);
   const theme =
@@ -62,7 +63,7 @@ const App: FC = (): JSX.Element => {
     }
 
     if (googleUser) {
-      dbAPI(googleUser, setLoader, unsetLoader).then(response => {
+      fetchUserData(googleUser, setLoader, unsetLoader).then(response => {
         response.budgets.forEach(budget => {
           dispatch(addBudgetAction(budget));
         });
@@ -83,10 +84,10 @@ const App: FC = (): JSX.Element => {
 
   // CURRENCY
   useEffect(() => {
-    currencyExchangeAPI(currencyFromState).then(currency => {
+    fetchExchangeRates(primaryCurrency).then(currency => {
       dispatch(updateCurrency(currency));
     });
-  }, [currencyFromState, dispatch]);
+  }, [primaryCurrency, dispatch]);
 
   return (
     <ThemeProvider theme={theme}>

@@ -6,7 +6,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Container, StyledList } from './Elements';
 import Budget from '../Budget';
 import { RootState } from '../../../../store';
-import '../../../../constant/style/animations.css';
+import '../../../../style/animations.css';
 import { Select } from '../../../Payments/components/TransactionList/Elements';
 import { Label } from '../../../../components/Input';
 

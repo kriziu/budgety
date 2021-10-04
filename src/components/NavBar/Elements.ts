@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { breakpoints } from '../../constant/style/breakpoints';
+import { breakpoints } from '../../style/breakpoints';
 import { Button } from '../Button';
 
 interface NavProps {

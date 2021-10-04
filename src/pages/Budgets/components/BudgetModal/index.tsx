@@ -17,9 +17,10 @@ import { handleEnterPressed } from '../../../../utils/utility';
 import { removeTransactionsByBudgetIdAction } from '../../../../store/transactions/actions';
 import Form from '../../../../components/Form';
 import { RootState } from '../../../../store';
-import { dbUrl } from '../../../../constant/routes';
 import { setLoaderAction, unsetLoaderAction } from '../../../../store/loader';
 import { Header3 } from '../../../../components/Header';
+
+const { REACT_APP_SERVER_URL } = process.env;
 
 const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
   const dispatch = useDispatch();
@@ -33,13 +34,15 @@ const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
 
     if (googleUser) {
       dispatch(setLoaderAction());
-      axios.delete(`${dbUrl}/budgets/${_id}`).then(() => {
+      axios.delete(`${REACT_APP_SERVER_URL}/budgets/${_id}`).then(() => {
         dispatch(removeBudgetAction(_id));
 
-        axios.delete(`${dbUrl}/transactions?budgetId=${_id}`).then(() => {
-          dispatch(removeTransactionsByBudgetIdAction(_id));
-          dispatch(unsetLoaderAction());
-        });
+        axios
+          .delete(`${REACT_APP_SERVER_URL}/transactions?budgetId=${_id}`)
+          .then(() => {
+            dispatch(removeTransactionsByBudgetIdAction(_id));
+            dispatch(unsetLoaderAction());
+          });
       });
     } else {
       dispatch(removeBudgetAction(_id));
@@ -68,7 +71,7 @@ const BudgetModal: FC<BudgetType> = ({ _id, title, amount }): JSX.Element => {
     if (googleUser) {
       dispatch(setLoaderAction());
       axios
-        .patch(`${dbUrl}/budgets/${_id}`, {
+        .patch(`${REACT_APP_SERVER_URL}/budgets/${_id}`, {
           ...newBudget,
         })
         .then(budget => {
