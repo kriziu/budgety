@@ -65,7 +65,6 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
           </Dash>
         </Header4>
         <Container>
-          {' '}
           {transactionsRepeated.length ? (
             renderTransactionsRepeated()
           ) : (
@@ -77,7 +76,7 @@ const FrequentTransactionsList: FC = (): JSX.Element => {
       </div>
       <div>
         <Header4 style={{ marginTop: '8rem' }}>
-          Frequent Payments{' '}
+          Recent Payments
           <Dash
             tabIndex={0}
             onClick={() => history.push('payments')}

@@ -24,9 +24,9 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.text} !important;
 
     :focus {
-    outline: none;
-    border-color: var(--color-blue-light) !important;
-  }
+      outline: none;
+      border-color: var(--color-blue-light) !important;
+    }
   }
 
 
@@ -37,6 +37,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: Roboto;
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.body};
+
+    overflow-y: scroll;
 
     color: ${({ theme }) => theme.text};
     transition: all .3s;
